@@ -1,0 +1,122 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #f6ddda;
+  font-family: "Nunito Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "DM Serif Text", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+.button-green {
+  background: #253938;
+  border-radius: 30px;
+  color: #fff;
+  padding: 1rem 2.5rem;
+  transition: all 0.25s ease;
+  &:hover {
+    background: #0f1f1e;
+  }
+}
+
+.home_hero {
+  background: url("main_bg.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 0 0 5rem 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  min-height: 600px;
+  width: 100%;
+}
+
+.container {
+  padding: 2rem;
+  margin: auto;
+  max-width: 1320px;
+  width: 100%;
+}
+
+.containerColumns {
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  margin: auto;
+  max-width: 1320px;
+  width: 100%;
+  display: flex;
+}
+
+.home_textBanner {
+  height: 600px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    margin-bottom: 2rem;
+  }
+
+  p {
+    margin: 0 auto;
+    max-width: 660px;
+  }
+}
+
+.home_stylesColumn {
+  width: 50%;
+  img {
+    width: 100%;
+  }
+}
+
+.anasana_cover {
+  img {
+    width: 100%;
+    border-radius: 5rem;
+  }
+}
