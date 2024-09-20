@@ -62,6 +62,7 @@ class WebhooksController < ApplicationController
       elsif
         @user.update()
       end
+    end
 
     render json: { message: 'success' }
   end
