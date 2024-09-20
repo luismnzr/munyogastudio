@@ -20,7 +20,7 @@
             <p>$250</p>
             <br>
             <% if user_signed_in? %>
-                <%= button_to 'Comprar Clase', payments_create_path(plan_id: 'price_1Q0y68BLJNSq80FfhBBtR6P3'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Comprar Clase', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80FfINZtLdFh'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
                 <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
             <% end %>
@@ -30,21 +30,33 @@
             <br>
             <p>$1,100</p>
             <br>
-            <a href="#" class="button-orange">Comprar clase</a>
+            <% if user_signed_in? %>
+                <%= button_to 'Comprar Clase', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80FfINZtLdFh'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+            <% else %>
+                <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
+            <% end %>
         </div>
         <div class="containerPrices-item">
             <h2>8 Clases</h2>
             <br>
             <p>$1,500</p>
             <br>
-            <a href="#" class="button-orange">Comprar clase</a>
+            <% if user_signed_in? %>
+                <%= button_to 'Comprar Clase', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80FfINZtLdFh'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+            <% else %>
+                <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
+            <% end %>
         </div>
         <div class="containerPrices-item">
             <h2>12 Clases</h2>
             <br>
             <p>$1,950</p>
             <br>
-            <a href="#" class="button-orange">Comprar clase</a>
+            <% if user_signed_in? %>
+                <%= button_to 'Comprar Clase', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80Ff9gWMLUIn'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+            <% else %>
+                <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
+            <% end %>
         </div>
     </div>
     <%= image_tag("lotus.svg") %>
