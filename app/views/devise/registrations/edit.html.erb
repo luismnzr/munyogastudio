@@ -1,5 +1,5 @@
 <nav class="navbar-home">
-  <%= link_to 'Calendario', calendario_path, class: 'button-white' %>
+  <%= link_to 'Clases', payments_new_path, class: 'button-white' %>
   <%= link_to root_path do %>
     <%= image_tag("mun_logo.svg") %>
   <% end %>
@@ -27,21 +27,21 @@
       <% end %>
 
       <div class="field">
-        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+        <%= f.label :password %> <i>(deja en blanco si no quieres cambiarla)</i><br />
         <%= f.password_field :password, autocomplete: "new-password", class: "input" %>
         <% if @minimum_password_length %>
           <br />
-          <em><%= @minimum_password_length %> characters minimum</em>
+          <em><%= @minimum_password_length %> caracteres mínimo</em>
         <% end %>
       </div>
 
       <div class="field">
-        <%= f.label :password_confirmation %><br />
+        <%= f.label "Confirma nuevo password" %><br />
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input" %>
       </div>
 
       <div class="field">
-        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+        <%= f.label "Password actual" %> <i>(para guardar cambios)</i><br />
         <%= f.password_field :current_password, autocomplete: "current-password", class: "input" %>
       </div>
 

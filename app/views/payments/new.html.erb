@@ -1,3 +1,14 @@
+<nav class="navbar-home">
+  <%= link_to 'Clases', payments_new_path, class: 'button-white' %>
+  <%= link_to root_path do %>
+    <%= image_tag("mun_logo.svg") %>
+  <% end %>
+  <% if current_user %>
+    <%= link_to "Mi Cuenta", edit_user_registration_path, class: 'button-orange'  %>
+  <% else %>
+    <%= link_to 'Iniciar sesión', new_user_session_path, class: 'button-green' %>
+  <% end %>
+</nav>
 <div class="containerPrices">
     <h2>Compra tus clases online</h2>
     <br>
@@ -8,11 +19,11 @@
             <br>
             <p>$250</p>
             <br>
-                <% if user_signed_in? %>
-                    <%= button_to 'Comprar', payments_create_path(plan_id: 'price_1Q0y68BLJNSq80FfhBBtR6P3'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
-                <% else %>
-                    <%= link_to 'Comprar', new_user_registration_path, class: 'button-orange' %>
-                <% end %>
+            <% if user_signed_in? %>
+                <%= button_to 'Comprar Clase', payments_create_path(plan_id: 'price_1Q0y68BLJNSq80FfhBBtR6P3'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+            <% else %>
+                <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
+            <% end %>
         </div>
         <div class="containerPrices-item">
             <h2>4 Clases</h2>
