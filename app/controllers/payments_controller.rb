@@ -9,7 +9,7 @@ class PaymentsController < ApplicationController
                   else
                     Stripe::Customer.create(email: current_user.email)
                   end,
-      success_url: 'hhttps://munyogastudio.com/users/edit',
+      success_url: 'https://munyogastudio.com/users/edit',
       cancel_url: 'https://munyogastudio.com/payments/new',
       line_items: [
         {price: params[:plan_id], quantity: 1},
