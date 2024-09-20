@@ -1,0 +1,30 @@
+<div class="registrationContainer">
+  <div  class="registrationContainer-cover">
+    <%= image_tag("cover-login.png") %>
+  </div>
+  <div class="registrationContainer-form">
+    <%= link_to root_path do %>
+      <%= image_tag("mun_logo.svg") %>
+    <% end %>
+    <h2>Entra a tu cuenta</h2>
+    <br>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'input' %>
+      </div>
+
+      <div class="field">
+        <%= f.label 'Contraseña' %><br />
+        <%= f.password_field :password, autocomplete: "current-password", class: 'input' %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Iniciar sesión", class: 'button-orange' %>
+      </div>
+    <% end %>
+    <br>
+    <%= render "devise/shared/links" %>
+  </div>
+
+</div>

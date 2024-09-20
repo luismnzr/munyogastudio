@@ -1,0 +1,159 @@
+<nav class="navbar">
+  <%= link_to 'Calendario', calendario_path, class: 'button-white' %>
+  <%= link_to root_path do %>
+    <%= image_tag("mun_logo.svg") %>
+  <% end %>
+  <% if current_user %>
+    <%= link_to "Mi Cuenta", edit_user_registration_path, class: 'button-orange'  %>
+  <% else %>
+    <%= link_to 'Iniciar sesión', new_user_session_path, class: 'button-green' %>
+  <% end %>
+</nav>
+<div class="calendarioCover">
+    <h2>Nuestro calendario semanal</h2>
+</div>
+<div class="calendarGrid">
+    <div class="calendarGrid-column">
+        <h3>Lunes</h3>
+        <div class="calendarGrid-item">
+            <p>7am</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Ana Rovira</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>8:15am</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Ana Rovira</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>9:30am</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Ana Rovira</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>6pm</p>
+            <p class="calendarGrid-class">Slow flow</p>
+            <p>Paola Arzola</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>7:30pm</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Paola Arzola</p>
+        </div>
+    </div>
+    <div class="calendarGrid-column">
+        <h3>Martes</h3>
+        <div class="calendarGrid-item">
+            <p>7am</p>
+            <p class="calendarGrid-class">Hatha Vinyasa</p>
+            <p>Luis Manzur</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>8:15am</p>
+            <p class="calendarGrid-class">Slow flow</p>
+            <p>Dani Escobar</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>9:30am</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Ana Rovira</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>6pm</p>
+            <p class="calendarGrid-class">Slow flow</p>
+            <p>Leo González</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>7:30pm</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Ana Rovira</p>
+        </div>
+    </div>
+    <div class="calendarGrid-column">
+        <h3>Miércoles</h3>
+        <div class="calendarGrid-item">
+            <p>7am</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Ana Rovira</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>8:15am</p>
+            <p class="calendarGrid-class">Hatha Vinyasa</p>
+            <p>Luis Manzur</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>9:30am</p>
+            <p class="calendarGrid-class">Slow flow</p>
+            <p>Ana Rovira</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>6pm</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Ana Rovira</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>7:30pm</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Tania Rodríguez</p>
+        </div>
+    </div>
+    <div class="calendarGrid-column">
+        <h3>Jueves</h3>
+        <div class="calendarGrid-item">
+            <p>7am</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Elissa Dávila</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>8:15am</p>
+            <p class="calendarGrid-class">Slow flow</p>
+            <p>Cristy Campos</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>9:30am</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Ana Rovira</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>6pm</p>
+            <p class="calendarGrid-class">Slow flow</p>
+            <p>Mariana Blando</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>7:30pm</p>
+            <p class="calendarGrid-class">Power Vinyasa</p>
+            <p>Ana Rovira</p>
+        </div>
+    </div>
+    <div class="calendarGrid-column">
+        <h3>Viernes</h3>
+        <div class="calendarGrid-item">
+            <p>7am</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Ana Rovira</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>8:15am</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Ana Rovira</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>9:30am</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Ana Rovira</p>
+        </div>
+        <div class="calendarGrid-item">
+            <p>6pm</p>
+            <p class="calendarGrid-class">Slow flow</p>
+            <p>Ana Rovira</p>
+        </div>
+    </div>
+    <div class="calendarGrid-column">
+        <h3>Sábado</h3>
+        <div class="calendarGrid-item">
+            <p>10am</p>
+            <p class="calendarGrid-class">Vinyasa flow</p>
+            <p>Ana Rovira</p>
+        </div>
+    </div>
+</div>

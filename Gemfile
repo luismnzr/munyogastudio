@@ -70,3 +70,9 @@ group :test do
   gem "selenium-webdriver"
 
 end
+
+gem "devise", "~> 4.9"
+gem 'stripe'
+gem "administrate"
+gem 'dotenv-rails', groups: [:development, :test]
+

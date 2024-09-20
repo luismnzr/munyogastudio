@@ -1,3 +1,11 @@
+<nav class="navbar-home">
+  <%= link_to 'Calendario', calendario_path, class: 'button-white' %>
+  <% if current_user %>
+    <%= link_to "Mi Cuenta", edit_user_registration_path, class: 'button-orange'  %>
+  <% else %>
+    <%= link_to 'Iniciar sesión', new_user_session_path, class: 'button-green' %>
+  <% end %>
+</nav>
 <div class="home_hero">
     <%= image_tag("mun_logo.svg") %>
 </div>
@@ -32,10 +40,55 @@
     <%= image_tag("anasana.jpg") %>
 </div>
 
-<div>
+<div class="containerPrices">
     <h2>Compra tus clases online</h2>
+    <br>
     <p>Las clases son drop-in, no necesitas hacer reservaciones</p>
-    <div>
+    <div class="container containerPrices-grid">
+        <div class="containerPrices-item">
+            <h2>1 Clase</h2>
+            <br>
+            <p>$250</p>
+            <br>
+            <a href="#" class="button-orange">Comprar clase</a>
+        </div>
+        <div class="containerPrices-item">
+            <h2>4 Clases</h2>
+            <br>
+            <p>$1,100</p>
+            <br>
+            <a href="#" class="button-orange">Comprar clase</a>
+        </div>
+        <div class="containerPrices-item">
+            <h2>8 Clases</h2>
+            <br>
+            <p>$1,500</p>
+            <br>
+            <a href="#" class="button-orange">Comprar clase</a>
+        </div>
+        <div class="containerPrices-item">
+            <h2>12 Clases</h2>
+            <br>
+            <p>$1,950</p>
+            <br>
+            <a href="#" class="button-orange">Comprar clase</a>
+        </div>
+    </div>
+    <%= image_tag("lotus.svg") %>
+</div>
 
+<div class="containerLocation container">
+    <div class="containerLocation-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d527.5190177242398!2d-100.25512774462042!3d25.582484537762166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662c7c7c0e50f29%3A0x6d0e70e9dfd561ba!2sMun%20Yoga%20Studio!5e0!3m2!1sen!2sus!4v1726679224542!5m2!1sen!2sus" width="600" height="450" style="border:0;border-radius:30px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="containerLocation-about">
+        <h2>
+            Visita<br>
+            Mun Yoga Studio
+        </h2>
+        <br>
+        <p>Plaza Nacional #5500, Local 37<br>La Estanzuela, 64988 Monterrey, N.L., Mexico</p>
+        <br>
+        <a href="https://www.instagram.com/munyogastudio/" target="_blank">@munyogastudio</a>
     </div>
 </div>
