@@ -1,6 +1,4 @@
 class PaymentsController < ApplicationController
-  before_action :authenticate_user!, except: [:new, :crew]
-
   def new
   end
 
