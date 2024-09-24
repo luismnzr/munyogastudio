@@ -76,6 +76,8 @@ Rails.application.configure do
     port: '587',
     authentication: :login
   }
+  config.action_mailer.default_url_options ={:host => 'munyogastudio.com', :protocol => 'https'}
+
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
