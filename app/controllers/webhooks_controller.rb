@@ -1,9 +1,10 @@
 class WebhooksController < ApplicationController
 #   skip_before_action :authenticate_user!
-  skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token, :authenticate_user!
 
   def create
-    Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+    Stripe.api_key = Rails.configuration.stripe[:secret_key]
+    webhook_key = Rails.configuration.stripe[:webhook_key]
 
     payload = request.body.read
     sig_header = request.env['HTTP_STRIPE_SIGNATURE']
@@ -11,7 +12,7 @@ class WebhooksController < ApplicationController
 
     begin
       event = Stripe::Webhook.construct_event(
-        payload, sig_header, ENV['WEBHOOK_KEY']
+        payload, sig_header, webhook_key
       )
     rescue JSON::ParserError => e
       status 400
@@ -25,7 +26,7 @@ class WebhooksController < ApplicationController
 
     # Handle the event
     case event.type
-    when 'customer.create'
+    when 'customer.created'
       customer = event.data.object
       @user = User.find_by(email: customer.email)
       @user.update(stripe_id: customer.id)
