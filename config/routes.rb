@@ -15,6 +15,6 @@ Rails.application.routes.draw do
   get 'payments/success'
   get 'payments/cancel'
   resources :webhooks, only: [:create]
-  # post 'billing_portal', to: 'billing_portal#create'
+  post 'billing_portal', to: 'billing_portal#create'
 
 end
