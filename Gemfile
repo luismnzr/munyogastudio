@@ -75,4 +75,4 @@ gem "devise", "~> 4.9"
 gem 'stripe'
 gem "administrate"
 gem 'dotenv-rails', groups: [:development, :test]
-
+gem 'mailtrap'
