@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "hola@munyogastudio.com"
+  default from: "Mun Yoga Studio"
   layout "mailer"
 end
