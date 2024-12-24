@@ -18,10 +18,10 @@
         <div class="containerPrices-item">
             <h2>1 Clase</h2>
             <br>
-            <p>$250</p>
+            <p>$280</p>
             <br>
             <% if user_signed_in? %>
-                <%= button_to 'Comprar Clase', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80FfINZtLdFh'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Comprar Clase', payments_create_path(plan_id: 'price_1QZZYoBLJNSq80FfONF7Ky7a'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
                 <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
             <% end %>

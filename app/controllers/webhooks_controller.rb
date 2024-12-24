@@ -32,7 +32,7 @@ class WebhooksController < ApplicationController
       @user.update(stripe_id: customer.id)
     when 'checkout.session.completed'
       session = event.data.object
-      single = 'price_1Q17JCBLJNSq80FfINZtLdFh'
+      single = 'price_1QZZYoBLJNSq80FfONF7Ky7a'
       double = 'price_1Q17JCBLJNSq80FfbnmUr55a'
       mid = 'price_1Q17JCBLJNSq80Ff9Z1B7esg'
       full = 'price_1Q17JCBLJNSq80Ff9gWMLUIn'
