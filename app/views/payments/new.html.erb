@@ -14,6 +14,7 @@
     <br>
     <p class="button-orange-width">No necesitas hacer reservación previa para nuestras clases. Solo llega con tiempo, elige tu espacio y disfruta de tu práctica. Recuerda que tu plan tiene una vigencia de 30 días a partir de la fecha de pago.</p>
     <br>
+    <%= image_tag("lotus.svg") %>
     <div class="container containerPrices-grid">
         <div class="containerPrices-item">
             <h2>1 Clase</h2>
@@ -44,6 +45,8 @@
             <br>
             <% if user_signed_in? %>
                 <%= button_to 'Comprar Plan', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80Ff9Z1B7esg'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <br>
+                <%= button_to 'Pago Recurrente', payments_create_path(plan_id: 'price_1R1tZGBLJNSq80Ff7krJ3z7p'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
                 <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
             <% end %>
@@ -55,6 +58,8 @@
             <br>
             <% if user_signed_in? %>
                 <%= button_to 'Comprar Plan', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80Ff9gWMLUIn'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <br>
+                <%= button_to 'Pago Recurrente', payments_create_path(plan_id: 'price_1R1tZoBLJNSq80FfKCsxQnDe'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
                 <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
             <% end %>
@@ -66,6 +71,8 @@
             <br>
             <% if user_signed_in? %>
                 <%= button_to 'Comprar Plan', payments_create_path(plan_id: 'price_1R1FvZBLJNSq80FfCXbatnzQ'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <br>
+                <%= button_to 'Pago Recurrente', payments_create_path(plan_id: 'price_1R1tZoBLJNSq80FfKCsxQnDe'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
                 <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
             <% end %>
@@ -82,5 +89,4 @@
             <% end %>
         </div>
     </div>
-    <%= image_tag("lotus.svg") %>
 </div>
