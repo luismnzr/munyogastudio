@@ -97,6 +97,20 @@ h2 {
   }
 }
 
+.notification {
+  padding: 10px;
+  position: absolute;
+  top: 80px;
+  right: 30px;
+  background: #f6ddda;
+  z-index: 9;
+  border-radius: 30px;
+  width: 90%;
+  max-width: 330px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 // NAVBAR
 .navbar-home {
   position: absolute;
