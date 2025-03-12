@@ -33,7 +33,7 @@
             <p>$1,100</p>
             <br>
             <% if user_signed_in? %>
-                <%= button_to 'Comprar Plan', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80FfbnmUr55a'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Comprar Clases', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80FfbnmUr55a'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
                 <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
             <% end %>
@@ -44,7 +44,7 @@
             <p>$1,500</p>
             <br>
             <% if user_signed_in? %>
-                <%= button_to 'Comprar Plan', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80Ff9Z1B7esg'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Comprar Clases', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80Ff9Z1B7esg'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
                 <br>
                 <%= button_to 'Pago Recurrente', payments_create_path(plan_id: 'price_1R1tZGBLJNSq80Ff7krJ3z7p'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
@@ -57,7 +57,7 @@
             <p>$1,950</p>
             <br>
             <% if user_signed_in? %>
-                <%= button_to 'Comprar Plan', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80Ff9gWMLUIn'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Comprar Clases', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80Ff9gWMLUIn'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
                 <br>
                 <%= button_to 'Pago Recurrente', payments_create_path(plan_id: 'price_1R1tZoBLJNSq80FfKCsxQnDe'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
@@ -70,7 +70,7 @@
             <p>$2,300</p>
             <br>
             <% if user_signed_in? %>
-                <%= button_to 'Comprar Plan', payments_create_path(plan_id: 'price_1R1FvZBLJNSq80FfCXbatnzQ'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Comprar Clases', payments_create_path(plan_id: 'price_1R1FvZBLJNSq80FfCXbatnzQ'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
                 <br>
                 <%= button_to 'Pago Recurrente', payments_create_path(plan_id: 'price_1R1tZoBLJNSq80FfKCsxQnDe'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>

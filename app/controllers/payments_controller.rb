@@ -14,7 +14,7 @@ class PaymentsController < ApplicationController
       line_items: [
         {price: params[:plan_id], quantity: 1},
       ],
-      mode: 'payment',
+      mode: 'subscription',
       allow_promotion_codes: true,
       metadata: {key: params[:plan_id]},
       # subscription_data: [
