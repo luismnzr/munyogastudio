@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'calendario', to: 'pages#calendario'
   get 'payments/new'
   post 'payments/create', to: 'payments#create', as: 'payments_create'
+  post 'payments/recurring', to: 'payments#recurring', as: 'payments_recurring'
   get 'payments/success'
   get 'payments/cancel'
   resources :webhooks, only: [:create]
