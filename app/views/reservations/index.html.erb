@@ -1,0 +1,293 @@
+<nav class="navbar">
+  <%= link_to 'Clases', payments_new_path, class: 'button-white' %>
+  <%= link_to root_path do %>
+    <%= image_tag("mun_logo.svg") %>
+  <% end %>
+  <%= link_to "Calendario", calendario_path, class: 'button-white' %>
+  <%= link_to "Mi Cuenta", edit_user_registration_path, class: 'button-orange'  %>
+</nav>
+
+<div class="reservations-container">
+  <div class="header">
+    <h1>Mis Reservas</h1>
+    <div class="class-balance">
+      <p>Clases disponibles: <strong><%= current_user.yogaclass %></strong></p>
+      <%= link_to 'Comprar más clases', payments_new_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+
+  <div class="upcoming-section">
+    <h2>Próximas Clases</h2>
+
+    <% if @upcoming_reservations.any? %>
+      <div class="reservations-grid">
+        <% @upcoming_reservations.each do |reservation| %>
+          <% session = reservation.class_session %>
+          <div class="reservation-card">
+            <div class="card-header">
+              <h3><%= session.class_type %></h3>
+              <span class="status-badge confirmed">Confirmada</span>
+            </div>
+
+            <div class="card-body">
+              <div class="info-row">
+                <span class="icon">📅</span>
+                <strong><%= session.date.strftime('%A, %B %d, %Y') %></strong>
+              </div>
+
+              <div class="info-row">
+                <span class="icon">🕐</span>
+                <%= session.start_time.strftime('%I:%M %p') %> - <%= session.end_time.strftime('%I:%M %p') %>
+              </div>
+
+              <% if session.instructor_name.present? %>
+                <div class="info-row">
+                  <span class="icon">👤</span>
+                  <%= session.instructor_name %>
+                </div>
+              <% end %>
+
+              <div class="info-row">
+                <span class="icon">👥</span>
+                <%= session.confirmed_reservations_count %> / <%= session.capacity %> personas
+              </div>
+
+              <div class="info-row">
+                <span class="icon">🎫</span>
+                Reservada el <%= reservation.created_at.strftime('%d/%m/%Y a las %I:%M %p') %>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <% if reservation.can_cancel? %>
+                <%= button_to 'Cancelar Reserva', cancel_reservation_path(reservation),
+                    method: :delete,
+                    class: 'btn btn-cancel',
+                    data: { confirm: '¿Estás seguro de que quieres cancelar esta reserva? Tu clase será devuelta a tu cuenta.' } %>
+                <p class="cancel-info">Puedes cancelar hasta 8 horas antes de la clase</p>
+              <% else %>
+                <p class="cancel-warning">No se puede cancelar - faltan menos de 8 horas</p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="empty-state">
+        <p>No tienes reservas próximas</p>
+        <%= link_to 'Ver Calendario', calendario_path, class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @past_reservations.any? %>
+    <div class="past-section">
+      <h2>Clases Anteriores</h2>
+      <table class="past-table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Clase</th>
+            <th>Instructor</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @past_reservations.each do |reservation| %>
+            <% session = reservation.class_session %>
+            <tr>
+              <td><%= session.date.strftime('%d/%m/%Y') %></td>
+              <td><%= session.class_type %></td>
+              <td><%= session.instructor_name || '-' %></td>
+              <td>
+                <span class="status-badge <%= reservation.status %>">
+                  <%= reservation.status == 'confirmed' ? 'Asistida' : 'Cancelada' %>
+                </span>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  .reservations-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+  }
+
+  .class-balance {
+    text-align: right;
+  }
+
+  .class-balance p {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-cancel {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .btn-cancel:hover {
+    background-color: #c82333;
+  }
+
+  .upcoming-section, .past-section {
+    margin-bottom: 40px;
+  }
+
+  .upcoming-section h2, .past-section h2 {
+    margin-bottom: 20px;
+  }
+
+  .reservations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+  }
+
+  .reservation-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .card-header {
+    background-color: #f8f9fa;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .card-header h3 {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  .status-badge {
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .status-badge.confirmed {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .status-badge.cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .info-row {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .icon {
+    font-size: 18px;
+  }
+
+  .card-footer {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ddd;
+  }
+
+  .cancel-info {
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+
+  .cancel-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+
+  .empty-state p {
+    font-size: 18px;
+    color: #6c757d;
+    margin-bottom: 20px;
+  }
+
+  .past-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .past-table th,
+  .past-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .past-table thead {
+    background-color: #f8f9fa;
+  }
+
+  .past-table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+</style>

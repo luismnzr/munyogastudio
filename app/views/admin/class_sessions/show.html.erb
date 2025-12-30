@@ -1,0 +1,219 @@
+<div class="admin-class-detail">
+  <div class="header">
+    <h1><%= @class_session.class_type %></h1>
+    <div class="actions">
+      <%= link_to 'Edit', edit_admin_class_session_path(@class_session), class: 'btn btn-warning' %>
+      <%= link_to 'Delete', admin_class_session_path(@class_session), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <%= link_to 'Back to Schedule', admin_class_sessions_path, class: 'btn btn-secondary' %>
+    </div>
+  </div>
+
+  <div class="class-info">
+    <div class="info-grid">
+      <div class="info-item">
+        <strong>Date:</strong>
+        <%= @class_session.date.strftime('%A, %B %d, %Y') %>
+      </div>
+
+      <div class="info-item">
+        <strong>Time:</strong>
+        <%= @class_session.start_time.strftime('%I:%M %p') %> - <%= @class_session.end_time.strftime('%I:%M %p') %>
+      </div>
+
+      <div class="info-item">
+        <strong>Instructor:</strong>
+        <%= @class_session.instructor_name || 'TBD' %>
+      </div>
+
+      <div class="info-item">
+        <strong>Capacity:</strong>
+        <%= @class_session.capacity %>
+      </div>
+
+      <div class="info-item">
+        <strong>Confirmed Reservations:</strong>
+        <span class="<%= @class_session.full? ? 'text-danger' : 'text-success' %>">
+          <%= @class_session.confirmed_reservations_count %>
+        </span>
+      </div>
+
+      <div class="info-item">
+        <strong>Available Spots:</strong>
+        <span class="<%= @class_session.available_spots > 0 ? 'text-success' : 'text-danger' %>">
+          <%= @class_session.available_spots %>
+        </span>
+      </div>
+    </div>
+
+    <% if @class_session.description.present? %>
+      <div class="info-item full-width">
+        <strong>Description:</strong>
+        <p><%= @class_session.description %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="reservations-section">
+    <h2>Reservations (<%= @reservations.count %>)</h2>
+
+    <% if @reservations.any? %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Booked At</th>
+            <th>Cancelled At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @reservations.each do |reservation| %>
+            <tr class="<%= reservation.status %>">
+              <td><%= reservation.user.name || 'N/A' %></td>
+              <td><%= reservation.user.email %></td>
+              <td>
+                <span class="status-badge <%= reservation.status %>">
+                  <%= reservation.status.titleize %>
+                </span>
+              </td>
+              <td><%= reservation.created_at.strftime('%b %d, %Y %I:%M %p') %></td>
+              <td><%= reservation.cancelled_at&.strftime('%b %d, %Y %I:%M %p') || '-' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No reservations yet.</p>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .admin-class-detail {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .class-info {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .info-item {
+    padding: 10px;
+  }
+
+  .info-item strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #6c757d;
+  }
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+
+  .reservations-section {
+    margin-top: 40px;
+  }
+
+  .reservations-section h2 {
+    margin-bottom: 20px;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table th,
+  .table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  .table thead {
+    background-color: #f8f9fa;
+  }
+
+  .table tr.cancelled {
+    background-color: #f8f9fa;
+    opacity: 0.7;
+  }
+
+  .status-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .status-badge.confirmed {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .status-badge.cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+    color: black;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .text-success {
+    color: #28a745;
+    font-weight: bold;
+  }
+
+  .text-danger {
+    color: #dc3545;
+    font-weight: bold;
+  }
+</style>

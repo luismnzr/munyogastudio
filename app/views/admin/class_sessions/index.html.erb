@@ -1,0 +1,149 @@
+<div class="admin-class-sessions">
+  <div class="header">
+    <h1>Class Schedule Management</h1>
+    <%= link_to 'Schedule New Class', new_admin_class_session_path, class: 'btn btn-primary' %>
+  </div>
+
+  <div class="upcoming-classes">
+    <h2>Upcoming Classes</h2>
+
+    <% if @upcoming_sessions.any? %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Class Type</th>
+            <th>Instructor</th>
+            <th>Capacity</th>
+            <th>Reservations</th>
+            <th>Available Spots</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @upcoming_sessions.each do |session| %>
+            <tr>
+              <td><%= session.date.strftime('%A, %B %d, %Y') %></td>
+              <td><%= session.start_time.strftime('%I:%M %p') %> - <%= session.end_time.strftime('%I:%M %p') %></td>
+              <td><%= session.class_type %></td>
+              <td><%= session.instructor_name || 'TBD' %></td>
+              <td><%= session.capacity %></td>
+              <td><%= session.confirmed_reservations_count %></td>
+              <td>
+                <span class="<%= session.available_spots > 0 ? 'text-success' : 'text-danger' %>">
+                  <%= session.available_spots %>
+                </span>
+              </td>
+              <td>
+                <%= link_to 'View', admin_class_session_path(session), class: 'btn btn-sm btn-info' %>
+                <%= link_to 'Edit', edit_admin_class_session_path(session), class: 'btn btn-sm btn-warning' %>
+                <%= link_to 'Delete', admin_class_session_path(session), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No upcoming classes scheduled.</p>
+    <% end %>
+  </div>
+
+  <% if @past_sessions.any? %>
+    <div class="past-classes">
+      <h2>Recent Past Classes</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Class Type</th>
+            <th>Instructor</th>
+            <th>Attendance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @past_sessions.each do |session| %>
+            <tr>
+              <td><%= session.date.strftime('%A, %B %d, %Y') %></td>
+              <td><%= session.start_time.strftime('%I:%M %p') %></td>
+              <td><%= session.class_type %></td>
+              <td><%= session.instructor_name || 'TBD' %></td>
+              <td><%= session.confirmed_reservations_count %> / <%= session.capacity %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  .admin-class-sessions {
+    padding: 20px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .btn-info {
+    background-color: #17a2b8;
+    color: white;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+    color: black;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .btn-sm {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+  }
+
+  .table th,
+  .table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  .table thead {
+    background-color: #f8f9fa;
+  }
+
+  .text-success {
+    color: #28a745;
+  }
+
+  .text-danger {
+    color: #dc3545;
+  }
+</style>

@@ -1,0 +1,129 @@
+<%= form_with(model: [:admin, @class_session], local: true) do |form| %>
+  <% if @class_session.errors.any? %>
+    <div class="errors">
+      <h3><%= pluralize(@class_session.errors.count, "error") %> prohibited this class from being saved:</h3>
+      <ul>
+        <% @class_session.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :class_type %>
+    <%= form.select :class_type,
+        ['Vinyasa flow', 'Slow flow', 'Slow Vinyasa', 'Ashtanga', 'Restaurativo', 'Community Event'],
+        { prompt: 'Select class type' },
+        { class: 'form-control', required: true } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :date %>
+    <%= form.date_field :date, class: 'form-control', required: true %>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <%= form.label :start_time %>
+      <%= form.time_field :start_time, class: 'form-control', required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :end_time %>
+      <%= form.time_field :end_time, class: 'form-control', required: true %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :instructor_name %>
+    <%= form.text_field :instructor_name, class: 'form-control', placeholder: 'e.g., Luis, Paola Arzola, Ana Rovira' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :capacity, 'Maximum Capacity' %>
+    <%= form.number_field :capacity, class: 'form-control', min: 1, value: @class_session.capacity || 12, required: true %>
+    <small class="form-text">Maximum number of students for this class</small>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: 'form-control', rows: 4, placeholder: 'Optional description or notes about this class' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-success' %>
+    <%= link_to 'Cancel', admin_class_sessions_path, class: 'btn btn-secondary' %>
+  </div>
+<% end %>
+
+<style>
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  .form-text {
+    display: block;
+    margin-top: 5px;
+    color: #6c757d;
+    font-size: 14px;
+  }
+
+  .errors {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  .errors h3 {
+    color: #721c24;
+    margin: 0 0 10px 0;
+    font-size: 16px;
+  }
+
+  .errors ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .errors li {
+    color: #721c24;
+  }
+
+  .actions {
+    margin-top: 20px;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    margin-left: 10px;
+  }
+</style>

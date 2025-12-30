@@ -4,6 +4,7 @@
     <%= image_tag("mun_logo.svg") %>
   <% end %>
   <% if current_user %>
+    <%= link_to "Mis Reservas", reservations_path, class: 'button-white' %>
     <%= link_to "Mi Cuenta", edit_user_registration_path, class: 'button-orange'  %>
   <% else %>
     <%= link_to 'Iniciar sesión', new_user_session_path, class: 'button-green' %>
@@ -11,129 +12,174 @@
 </nav>
 <div class="calendarioCover">
     <h2>Nuestro calendario semanal</h2>
+    <% if current_user %>
+      <p style="color: white; margin-top: 10px;">Tus clases disponibles: <strong><%= current_user.yogaclass %></strong></p>
+    <% end %>
 </div>
 <div class="calendarGrid">
-    <div class="calendarGrid-column">
-        <h3>Lunes</h3>
-        <div class="calendarGrid-item">
-            <p>7am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>8:15am</p>
-            <p class="calendarGrid-class">Slow Vinyasa</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>9:30am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>6pm</p>
-            <p class="calendarGrid-class">Slow flow</p>
-            <p>Paola Arzola</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>7:30pm</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-            <p>Paola Arzola</p>
-        </div>
-    </div>
-    <div class="calendarGrid-column">
-        <h3>Martes</h3>
-        <div class="calendarGrid-item">
-            <p>7am</p>
-            <p class="calendarGrid-class">Vinyasa Yoga</p>
-            <p>Luis Manzur</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>8:15am</p>
-            <p class="calendarGrid-class">Slow flow</p>
-            <p>Luis Manzur</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>9:30am</p>
-            <p class="calendarGrid-class">Ashtanga</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>6pm</p>
-            <p class="calendarGrid-class">Slow flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>7:30pm</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-    </div>
-    <div class="calendarGrid-column">
-        <h3>Miércoles</h3>
-        <div class="calendarGrid-item">
-            <p>7am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>8:15am</p>
-            <p class="calendarGrid-class">Slow flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>9:30am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>6pm</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>7:30pm</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-    </div>
-    <div class="calendarGrid-column">
-        <h3>Jueves</h3>
-        <div class="calendarGrid-item">
-            <p>7am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>8:15am</p>
-            <p class="calendarGrid-class">Slow flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>9:30am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>6pm</p>
-            <p class="calendarGrid-class">Slow flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>7:30pm</p>
-            <p class="calendarGrid-class">Restaurativo</p>
-        </div>
-    </div>
-    <div class="calendarGrid-column">
-        <h3>Viernes</h3>
-        <div class="calendarGrid-item">
-            <p>7am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>8:15am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>9:30am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>6pm</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-    </div>
-    <div class="calendarGrid-column">
-        <h3>Sábado</h3>
-        <div class="calendarGrid-item">
-            <p>10am</p>
-            <p class="calendarGrid-class">Vinyasa flow / Community Event</p>
-            <p>Ana Rovira</p>
-        </div>
-    </div>
+    <% 7.times do |i| %>
+      <% date = Date.today + i.days %>
+      <% day_sessions = @sessions_by_date[date] || [] %>
+
+      <div class="calendarGrid-column">
+        <h3><%= date.strftime('%A') %></h3>
+        <p class="calendar-date"><%= date.strftime('%d/%m') %></p>
+
+        <% if day_sessions.any? %>
+          <% day_sessions.each do |session| %>
+            <div class="calendarGrid-item <%= session.full? ? 'full' : '' %>">
+              <p class="time"><%= session.start_time.strftime('%I:%M %p') %></p>
+              <p class="calendarGrid-class"><%= session.class_type %></p>
+              <% if session.instructor_name.present? %>
+                <p class="instructor"><%= session.instructor_name %></p>
+              <% end %>
+
+              <div class="session-info">
+                <p class="spots <%= session.available_spots > 0 ? 'available' : 'full' %>">
+                  <%= session.available_spots %> / <%= session.capacity %> espacios
+                </p>
+
+                <% if current_user %>
+                  <% user_reservation = current_user.reservations.confirmed.find_by(class_session_id: session.id) %>
+                  <% if user_reservation %>
+                    <p class="booked-badge">Ya reservada</p>
+                  <% elsif session.full? %>
+                    <p class="full-badge">Lleno</p>
+                  <% elsif current_user.yogaclass > 0 %>
+                    <%= button_to 'Reservar', reservations_path(class_session_id: session.id), method: :post, class: 'btn-book' %>
+                  <% else %>
+                    <p class="no-credits">Sin clases disponibles</p>
+                  <% end %>
+                <% else %>
+                  <p class="login-prompt">
+                    <%= link_to 'Inicia sesión para reservar', new_user_session_path %>
+                  </p>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="no-classes">Sin clases programadas</p>
+        <% end %>
+      </div>
+    <% end %>
 </div>
+
+<style>
+  .calendar-date {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: -10px;
+    margin-bottom: 15px;
+  }
+
+  .calendarGrid-item {
+    position: relative;
+    padding: 15px;
+    min-height: 150px;
+  }
+
+  .calendarGrid-item.full {
+    opacity: 0.7;
+    background-color: #f5f5f5;
+  }
+
+  .time {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .instructor {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+  }
+
+  .session-info {
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+  }
+
+  .spots {
+    font-size: 12px;
+    margin: 5px 0;
+  }
+
+  .spots.available {
+    color: #28a745;
+  }
+
+  .spots.full {
+    color: #dc3545;
+  }
+
+  .btn-book {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  .btn-book:hover {
+    background-color: #0056b3;
+  }
+
+  .booked-badge {
+    background-color: #28a745;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+  }
+
+  .full-badge {
+    background-color: #dc3545;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+  }
+
+  .no-credits {
+    color: #856404;
+    background-color: #fff3cd;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+  }
+
+  .login-prompt {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+  }
+
+  .login-prompt a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .login-prompt a:hover {
+    text-decoration: underline;
+  }
+
+  .no-classes {
+    text-align: center;
+    color: #999;
+    padding: 20px 10px;
+    font-style: italic;
+  }
+</style>

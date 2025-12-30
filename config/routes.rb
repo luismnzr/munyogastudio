@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   namespace :admin do
       resources :users
+      resources :class_sessions
 
-      root to: "users#index"
+      root to: "class_sessions#index"
     end
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -10,6 +11,14 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root to: 'pages#home'
   get 'calendario', to: 'pages#calendario'
+
+  # User reservations
+  resources :reservations, only: [:index, :create, :destroy] do
+    member do
+      delete :cancel
+    end
+  end
+
   get 'payments/new'
   post 'payments/create', to: 'payments#create', as: 'payments_create'
   post 'payments/recurring', to: 'payments#recurring', as: 'payments_recurring'
