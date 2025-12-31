@@ -2,7 +2,7 @@
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * Any CSS file within this directory, lib/assets/stylesheets, or any plugin's
  * vendor/assets/stylesheets directory can be referenced here using a relative path.
  *
  * You're free to add application-wide styles to this file and they'll appear at the bottom of the
@@ -58,9 +58,10 @@ h2 {
   font-family: "Nunito Sans", sans-serif;
   padding: 1rem 2.5rem;
   transition: all 0.25s ease;
-  &:hover {
-    background: #0f1f1e;
-  }
+}
+
+.button-green:hover {
+  background: #0f1f1e;
 }
 
 .button-white {
@@ -69,15 +70,15 @@ h2 {
   border-radius: 30px;
   color: #253938 !important;
   cursor: pointer;
-
   display: block;
   font-size: 1rem;
   font-family: "Nunito Sans", sans-serif;
   padding: 1rem 2.5rem;
   transition: all 0.25s ease;
-  &:hover {
-    background: #f4f4f4;
-  }
+}
+
+.button-white:hover {
+  background: #f4f4f4;
 }
 
 .button-orange {
@@ -86,15 +87,15 @@ h2 {
   border-radius: 30px;
   color: #fff;
   cursor: pointer;
-
   display: block;
   font-family: "Nunito Sans", sans-serif;
   font-size: 1rem;
   padding: 1rem 2.5rem;
   transition: all 0.25s ease;
-  &:hover {
-    background: #d45937;
-  }
+}
+
+.button-orange:hover {
+  background: #d45937;
 }
 
 .notification {
@@ -111,7 +112,7 @@ h2 {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-// NAVBAR
+/* NAVBAR */
 .navbar-home {
   position: absolute;
   width: 100%;
@@ -121,9 +122,10 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  img {
-    height: 45px;
-  }
+}
+
+.navbar-home img {
+  height: 45px;
 }
 
 .navbar {
@@ -134,53 +136,59 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  img {
-    height: 45px;
-  }
-  .button-green,
-  .button-white {
-    padding: 1rem 2.5rem;
-    width: 110px;
-    text-align: center;
-    text-align: center;
-    max-width: 180px;
-  }
+}
+
+.navbar img {
+  height: 45px;
+}
+
+.navbar .button-green,
+.navbar .button-white {
+  padding: 1rem 2.5rem;
+  width: 110px;
+  text-align: center;
+  max-width: 180px;
 }
 
 @media screen and (max-width: 749px) {
   .navbar {
     padding: 0 1rem;
-    img {
-      height: 30px;
-    }
-    .button-green,
-    .button-white,
-    .button-orange {
-      font-size: 14px;
-      font-weight: 600;
-      padding: 0.75rem;
-      width: 110px;
-      text-align: center;
-    }
   }
+
+  .navbar img {
+    height: 30px;
+  }
+
+  .navbar .button-green,
+  .navbar .button-white,
+  .navbar .button-orange {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0.75rem;
+    width: 110px;
+    text-align: center;
+  }
+
   .navbar-home {
     padding: 0 1rem;
-    img {
-      height: 25px;
-    }
-    .button-green,
-    .button-white,
-    .button-orange {
-      font-size: 14px;
-      font-weight: 600;
-      padding: 0.75rem;
-      width: 110px;
-      text-align: center;
-    }
+  }
+
+  .navbar-home img {
+    height: 25px;
+  }
+
+  .navbar-home .button-green,
+  .navbar-home .button-white,
+  .navbar-home .button-orange {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0.75rem;
+    width: 110px;
+    text-align: center;
   }
 }
 
-// HOME
+/* HOME */
 
 .home_hero {
   background: url("main_bg.jpg");
@@ -215,34 +223,32 @@ h2 {
 .home_textBanner {
   height: 600px;
   text-align: center;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
 
-  img {
-    margin-bottom: 2rem;
-  }
+.home_textBanner img {
+  margin-bottom: 2rem;
+}
 
-  p {
-    margin: 0 auto;
-    max-width: 660px;
-  }
+.home_textBanner p {
+  margin: 0 auto;
+  max-width: 660px;
 }
 
 .home_stylesColumn {
   width: 50%;
-  img {
-    width: 100%;
-  }
 }
 
-.anasana_cover {
-  img {
-    width: 100%;
-    border-radius: 5rem;
-  }
+.home_stylesColumn img {
+  width: 100%;
+}
+
+.anasana_cover img {
+  width: 100%;
+  border-radius: 5rem;
 }
 
 .containerPrices {
@@ -250,30 +256,35 @@ h2 {
   color: #fff;
   text-align: center;
   padding: 7rem 0;
-  h2 {
-    color: #f7c6bf;
-  }
+}
 
-  &-grid {
-    display: grid;
-    gap: 30px;
-    grid-template-columns: 1fr 1fr;
-  }
-  &-item {
-    border: 1px solid #ee7756;
-    border-radius: 40px;
-    padding: 2rem;
-    p {
-      font-size: 21px;
-    }
-    button {
-      width: 100%;
-    }
-  }
-  .button-orange-width {
-    max-width: 320px;
-    margin: auto;
-  }
+.containerPrices h2 {
+  color: #f7c6bf;
+}
+
+.containerPrices-grid {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.containerPrices-item {
+  border: 1px solid #ee7756;
+  border-radius: 40px;
+  padding: 2rem;
+}
+
+.containerPrices-item p {
+  font-size: 21px;
+}
+
+.containerPrices-item button {
+  width: 100%;
+}
+
+.containerPrices .button-orange-width {
+  max-width: 320px;
+  margin: auto;
 }
 
 .containerLocation {
@@ -281,53 +292,61 @@ h2 {
   align-items: center;
   gap: 30px;
   padding: 100px 2rem;
-  &-map {
-    width: 50%;
-  }
-  &-about {
-    width: 50%;
-    a {
-      color: #000;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
+}
+
+.containerLocation-map {
+  width: 50%;
+}
+
+.containerLocation-about {
+  width: 50%;
+}
+
+.containerLocation-about a {
+  color: #000;
+}
+
+.containerLocation-about a:hover {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 749px) {
   .home_hero {
     padding: 2rem;
-    img {
-      width: 300px;
-    }
   }
+
+  .home_hero img {
+    width: 300px;
+  }
+
   .containerColumns {
     flex-direction: column;
   }
+
   .anasana_cover img {
     border-radius: 2rem;
   }
-  .containerPrices {
-    &-grid {
-      grid-template-columns: 1fr;
-    }
+
+  .containerPrices-grid {
+    grid-template-columns: 1fr;
   }
+
   .home_stylesColumn {
     width: 100%;
   }
+
   .containerLocation {
     flex-direction: column;
     padding: 50px 2rem;
-    &-map,
-    &-about {
-      width: 100%;
-    }
   }
-  .containerLocation-map {
-    iframe {
-      width: 100%;
-    }
+
+  .containerLocation-map,
+  .containerLocation-about {
+    width: 100%;
+  }
+
+  .containerLocation-map iframe {
+    width: 100%;
   }
 }
 
@@ -337,7 +356,7 @@ footer {
   padding: 60px;
 }
 
-// DEVISE
+/* DEVISE */
 .registrationContainer {
   background: #253938;
   padding: 70px 0;
@@ -345,64 +364,76 @@ footer {
   gap: 30px;
   align-items: center;
   color: #fff;
-  &-alt {
-    align-items: baseline;
-  }
+}
 
-  &-cover {
-    width: 50%;
-    img {
-      padding: 2rem;
-      width: 100%;
-      max-width: 630px;
-      margin: auto;
-      display: block;
-    }
-  }
-  &-form {
-    padding: 2rem;
-    width: 50%;
-    img {
-      height: 60px;
-      margin-bottom: 50px;
-    }
-    .button-white {
-      display: inline-block;
-    }
-  }
-  .field {
-    margin-bottom: 30px;
-  }
-  label {
-    margin-bottom: 10px;
-  }
-  .input {
-    padding: 1rem;
-    border-radius: 15px;
-    width: 100%;
-    max-width: 420px;
-  }
-  a {
-    color: #fff;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+.registrationContainer-alt {
+  align-items: baseline;
+}
+
+.registrationContainer-cover {
+  width: 50%;
+}
+
+.registrationContainer-cover img {
+  padding: 2rem;
+  width: 100%;
+  max-width: 630px;
+  margin: auto;
+  display: block;
+}
+
+.registrationContainer-form {
+  padding: 2rem;
+  width: 50%;
+}
+
+.registrationContainer-form img {
+  height: 60px;
+  margin-bottom: 50px;
+}
+
+.registrationContainer-form .button-white {
+  display: inline-block;
+}
+
+.registrationContainer .field {
+  margin-bottom: 30px;
+}
+
+.registrationContainer label {
+  margin-bottom: 10px;
+}
+
+.registrationContainer .input {
+  padding: 1rem;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.registrationContainer a {
+  color: #fff;
+}
+
+.registrationContainer a:hover {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 749px) {
   .registrationContainer {
     flex-direction: column;
   }
+
   .registrationContainer-form {
     width: 100%;
   }
+
   .registrationContainer-cover {
     display: none;
   }
 }
 
-// CALENDAR
+/* CALENDAR */
 
 .calendarioCover {
   background: #253938;
@@ -418,26 +449,30 @@ footer {
 
 .calendarGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 20px;
   padding: 2rem;
-  &-column {
-    text-align: center;
-    h3 {
-      margin-bottom: 20px;
-    }
-  }
-  &-item {
-    background: #fbeeed;
-    padding: 2rem 1rem;
-    border-radius: 30px;
-    margin-bottom: 20px;
-  }
-  &-class {
-    font-size: 1.125rem;
-    font-weight: bold;
-    margin: 1rem 0;
-  }
+}
+
+.calendarGrid-column {
+  text-align: center;
+}
+
+.calendarGrid-column h3 {
+  margin-bottom: 20px;
+}
+
+.calendarGrid-item {
+  background: #fbeeed;
+  padding: 2rem 1rem;
+  border-radius: 30px;
+  margin-bottom: 20px;
+}
+
+.calendarGrid-class {
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin: 1rem 0;
 }
 
 @media screen and (max-width: 749px) {
