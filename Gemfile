@@ -73,9 +73,5 @@ end
 
 gem "devise", "~> 4.9"
 gem 'stripe'
-gem "administrate"
-# Override sassc-rails to avoid native extension issues
-gem 'sassc-rails', '~> 2.1'
-gem 'sassc', '~> 2.4'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'mailtrap'
