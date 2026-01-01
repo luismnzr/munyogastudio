@@ -15,15 +15,31 @@
     <% if current_user %>
       <p style="color: white; margin-top: 10px;">Tus clases disponibles: <%= current_user.yogaclass %></p>
     <% end %>
+
+    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 20px;">
+      <%= link_to '← Semana Anterior', calendario_path(week: @current_week_offset - 1), class: 'button-white', style: 'display: inline-block; padding: 10px 20px; font-size: 14px;' %>
+      <p style="color: white; margin: 0;">
+        <%= @start_of_week.strftime('%d %b') %> - <%= @end_of_week.strftime('%d %b %Y') %>
+      </p>
+      <%= link_to 'Semana Siguiente →', calendario_path(week: @current_week_offset + 1), class: 'button-white', style: 'display: inline-block; padding: 10px 20px; font-size: 14px;' %>
+    </div>
+
+    <% if @current_week_offset != 0 %>
+      <%= link_to 'Volver a semana actual', calendario_path, style: 'color: white; font-size: 14px; margin-top: 10px; display: inline-block; text-decoration: underline;' %>
+    <% end %>
 </div>
 <div class="calendarGrid">
     <% 7.times do |i| %>
-      <% date = Date.today + i.days %>
+      <% date = @start_of_week + i.days %>
       <% day_sessions = @sessions_by_date[date] || [] %>
+      <% is_today = date == Date.today %>
 
       <div class="calendarGrid-column">
-        <h3><%= date.strftime('%A') %></h3>
-        <p style="font-size: 14px; color: #666;"><%= date.strftime('%d/%m') %></p>
+        <h3 style="<%= 'color: #ee7756;' if is_today %>"><%= date.strftime('%A') %></h3>
+        <p style="font-size: 14px; color: <%= is_today ? '#ee7756' : '#666' %>; font-weight: <%= is_today ? 'bold' : 'normal' %>;">
+          <%= date.strftime('%d/%m') %>
+          <%= '(Hoy)' if is_today %>
+        </p>
 
         <% if day_sessions.any? %>
           <% day_sessions.each do |session| %>
