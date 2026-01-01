@@ -55,7 +55,31 @@
     <br>
     <p>Clases disponibles: <%= current_user.yogaclass %></p>
     <p>Vigencia: <%= current_user.enddate %></p>
-    <br><br>
+    <br>
+    <%= link_to 'Ver Calendario', calendario_path, class: "button-green", style: "display: inline-block; margin-bottom: 20px;" %>
+    <br>
+
+    <% upcoming_reservations = current_user.reservations.confirmed.upcoming.includes(:class_session).limit(5) %>
+    <% if upcoming_reservations.any? %>
+      <h3 style="margin-top: 20px;">Próximas Clases Reservadas</h3>
+      <br>
+      <% upcoming_reservations.each do |reservation| %>
+        <% session = reservation.class_session %>
+        <div style="background: #fbeeed; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+          <p style="font-weight: bold; margin-bottom: 5px;"><%= session.class_type %></p>
+          <p style="font-size: 14px; margin-bottom: 3px;">📅 <%= session.date.strftime('%A, %d %b') %></p>
+          <p style="font-size: 14px; margin-bottom: 3px;">🕐 <%= session.start_time.strftime('%I:%M %p') %></p>
+          <% if session.instructor_name.present? %>
+            <p style="font-size: 14px;">👤 <%= session.instructor_name %></p>
+          <% end %>
+        </div>
+      <% end %>
+      <%= link_to 'Ver todas mis reservas →', reservations_path, style: "color: #007bff; font-size: 14px;" %>
+      <br><br>
+    <% end %>
+
+    <hr>
+    <br>
     <h2>Editar Membresía</h2>
     <br>
     <%= button_to 'Portal de pagos', billing_portal_create_path, data: { turbo: "false" }, class: "button-orange" %>
