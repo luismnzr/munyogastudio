@@ -4,6 +4,7 @@
     <%= image_tag("mun_logo.svg") %>
   <% end %>
   <% if current_user %>
+    <%= link_to "Mis Reservas", reservations_path, class: 'button-white' %>
     <%= link_to "Mi Cuenta", edit_user_registration_path, class: 'button-orange'  %>
   <% else %>
     <%= link_to 'Iniciar sesión', new_user_session_path, class: 'button-green' %>
@@ -11,129 +12,51 @@
 </nav>
 <div class="calendarioCover">
     <h2>Nuestro calendario semanal</h2>
+    <% if current_user %>
+      <p style="color: white; margin-top: 10px;">Tus clases disponibles: <%= current_user.yogaclass %></p>
+    <% end %>
 </div>
 <div class="calendarGrid">
-    <div class="calendarGrid-column">
-        <h3>Lunes</h3>
-        <div class="calendarGrid-item">
-            <p>7am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>8:15am</p>
-            <p class="calendarGrid-class">Slow Vinyasa</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>9:30am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>6pm</p>
-            <p class="calendarGrid-class">Slow flow</p>
-            <p>Paola Arzola</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>7:30pm</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-            <p>Paola Arzola</p>
-        </div>
-    </div>
-    <div class="calendarGrid-column">
-        <h3>Martes</h3>
-        <div class="calendarGrid-item">
-            <p>7am</p>
-            <p class="calendarGrid-class">Vinyasa Yoga</p>
-            <p>Luis Manzur</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>8:15am</p>
-            <p class="calendarGrid-class">Slow flow</p>
-            <p>Luis Manzur</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>9:30am</p>
-            <p class="calendarGrid-class">Ashtanga</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>6pm</p>
-            <p class="calendarGrid-class">Slow flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>7:30pm</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-    </div>
-    <div class="calendarGrid-column">
-        <h3>Miércoles</h3>
-        <div class="calendarGrid-item">
-            <p>7am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>8:15am</p>
-            <p class="calendarGrid-class">Slow flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>9:30am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>6pm</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>7:30pm</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-    </div>
-    <div class="calendarGrid-column">
-        <h3>Jueves</h3>
-        <div class="calendarGrid-item">
-            <p>7am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>8:15am</p>
-            <p class="calendarGrid-class">Slow flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>9:30am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>6pm</p>
-            <p class="calendarGrid-class">Slow flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>7:30pm</p>
-            <p class="calendarGrid-class">Restaurativo</p>
-        </div>
-    </div>
-    <div class="calendarGrid-column">
-        <h3>Viernes</h3>
-        <div class="calendarGrid-item">
-            <p>7am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>8:15am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>9:30am</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-        <div class="calendarGrid-item">
-            <p>6pm</p>
-            <p class="calendarGrid-class">Vinyasa flow</p>
-        </div>
-    </div>
-    <div class="calendarGrid-column">
-        <h3>Sábado</h3>
-        <div class="calendarGrid-item">
-            <p>10am</p>
-            <p class="calendarGrid-class">Vinyasa flow / Community Event</p>
-            <p>Ana Rovira</p>
-        </div>
-    </div>
+    <% 7.times do |i| %>
+      <% date = Date.today + i.days %>
+      <% day_sessions = @sessions_by_date[date] || [] %>
+
+      <div class="calendarGrid-column">
+        <h3><%= date.strftime('%A') %></h3>
+        <p style="font-size: 14px; color: #666;"><%= date.strftime('%d/%m') %></p>
+
+        <% if day_sessions.any? %>
+          <% day_sessions.each do |session| %>
+            <div class="calendarGrid-item" style="<%= 'opacity: 0.6;' if session.full? %>">
+              <p><%= session.start_time.strftime('%I:%M %p') %></p>
+              <p class="calendarGrid-class"><%= session.class_type %></p>
+              <% if session.instructor_name.present? %>
+                <p style="font-size: 14px;"><%= session.instructor_name %></p>
+              <% end %>
+
+              <p style="font-size: 12px; margin: 10px 0; color: <%= session.available_spots > 0 ? '#28a745' : '#dc3545' %>;">
+                <%= session.available_spots %> / <%= session.capacity %> espacios
+              </p>
+
+              <% if current_user %>
+                <% user_reservation = current_user.reservations.confirmed.find_by(class_session_id: session.id) %>
+                <% if user_reservation %>
+                  <p style="background: #28a745; color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">✓ Reservada</p>
+                <% elsif session.full? %>
+                  <p style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Lleno</p>
+                <% elsif current_user.yogaclass > 0 %>
+                  <%= button_to 'Reservar', reservations_path(class_session_id: session.id), method: :post, style: 'background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; width: 100%; margin-top: 5px;' %>
+                <% else %>
+                  <p style="background: #ffc107; color: #000; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Sin clases</p>
+                <% end %>
+              <% else %>
+                <%= link_to 'Iniciar sesión', new_user_session_path, style: 'color: #007bff; font-size: 12px;' %>
+              <% end %>
+            </div>
+          <% end %>
+        <% else %>
+          <p style="color: #999; font-style: italic; padding: 20px 10px;">Sin clases</p>
+        <% end %>
+      </div>
+    <% end %>
 </div>
