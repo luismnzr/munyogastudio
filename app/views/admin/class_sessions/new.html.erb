@@ -1,0 +1,53 @@
+<h1>Schedule New Class</h1>
+
+<%= form_with(model: [:admin, @class_session], local: true) do |f| %>
+  <% if @class_session.errors.any? %>
+    <div style="background: #f8d7da; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+      <ul>
+        <% @class_session.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="margin-bottom: 15px;">
+    <%= f.label :class_type, style: 'display: block; margin-bottom: 5px; font-weight: bold;' %>
+    <%= f.select :class_type, ['Vinyasa Flow', 'Slow Flow', 'Power Vinyasa', 'Ashtanga Led', 'Restaurativo', 'Yang to Yin', 'Drills', 'Evento'], { prompt: 'Estilo de clase' }, { required: true, style: 'padding: 10px; width: 100%; max-width: 400px;' } %>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <%= f.label :date, style: 'display: block; margin-bottom: 5px; font-weight: bold;' %>
+    <%= f.date_field :date, required: true, style: 'padding: 10px; width: 100%; max-width: 400px;' %>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <%= f.label :start_time, style: 'display: block; margin-bottom: 5px; font-weight: bold;' %>
+    <%= f.time_field :start_time, required: true, style: 'padding: 10px; width: 100%; max-width: 400px;' %>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <%= f.label :end_time, style: 'display: block; margin-bottom: 5px; font-weight: bold;' %>
+    <%= f.time_field :end_time, required: true, style: 'padding: 10px; width: 100%; max-width: 400px;' %>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <%= f.label :instructor_name, style: 'display: block; margin-bottom: 5px; font-weight: bold;' %>
+    <%= f.select :instructor_name, ['Ana Rovira', 'Luis Manzur', 'Elissa Dávila', 'Leo González', 'Mariana Blando', 'Tania Rodríguez', 'Paola Arzola', 'Ana Paula Romero', 'TBD'], { prompt: 'Selecciona Maestrx' }, { required: true, style: 'padding: 10px; width: 100%; max-width: 400px;' } %>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <%= f.label :capacity, 'Maximum Capacity', style: 'display: block; margin-bottom: 5px; font-weight: bold;' %>
+    <%= f.number_field :capacity, value: 12, min: 1, required: true, style: 'padding: 10px; width: 100%; max-width: 400px;' %>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <%= f.label :description, style: 'display: block; margin-bottom: 5px; font-weight: bold;' %>
+    <%= f.text_area :description, rows: 3, placeholder: 'Optional description', style: 'padding: 10px; width: 100%; max-width: 400px;' %>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <%= f.submit 'Create Class', class: 'button-green', style: 'display: inline-block; margin-right: 10px;' %>
+    <%= link_to 'Cancel', admin_class_sessions_path, class: 'button-white', style: 'display: inline-block;' %>
+  </div>
+<% end %>

@@ -1,0 +1,181 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <div class="navbar-left">
+      <%= link_to root_path, class: 'navbar-logo' do %>
+        <%= image_tag("mun_logo.svg", alt: "Mun Yoga Studio") %>
+      <% end %>
+    </div>
+
+    <div class="navbar-right">
+      <button class="navbar-toggle" id="navbarToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="navbar-menu" id="navbarMenu">
+        <%= link_to 'Clases', payments_new_path, class: 'button-white' %>
+        <% if current_user %>
+          <%= link_to "Calendario", calendario_path, class: 'button-white' %>
+          <%= link_to "Mi Cuenta", edit_user_registration_path, class: 'button-orange' %>
+        <% else %>
+          <%= link_to 'Iniciar sesión', new_user_session_path, class: 'button-green' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.getElementById('navbarToggle');
+    const menu = document.getElementById('navbarMenu');
+
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        menu.classList.toggle('active');
+        toggle.classList.toggle('active');
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function(event) {
+        const isClickInsideNav = toggle.contains(event.target) || menu.contains(event.target);
+        if (!isClickInsideNav && menu.classList.contains('active')) {
+          menu.classList.remove('active');
+          toggle.classList.remove('active');
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .navbar {
+    width: 100%;
+    padding: 0;
+    height: auto;
+    background: #f6ddda;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .navbar-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    z-index: 101;
+  }
+
+  .navbar-logo img {
+    height: 45px;
+  }
+
+  .navbar-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 101;
+  }
+
+  .navbar-toggle span {
+    width: 25px;
+    height: 3px;
+    background: #253938;
+    margin: 3px 0;
+    transition: all 0.3s ease;
+    border-radius: 3px;
+  }
+
+  .navbar-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+  }
+
+  .navbar-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .navbar-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+
+  .navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .navbar-menu .button-white,
+  .navbar-menu .button-green,
+  .navbar-menu .button-orange {
+    padding: 0.75rem 1.5rem;
+    width: auto;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 749px) {
+    .navbar-container {
+      padding: 0 1rem;
+    }
+
+    .navbar-logo img {
+      height: 35px;
+    }
+
+    .navbar-toggle {
+      display: flex;
+    }
+
+    .navbar-menu {
+      position: fixed;
+      top: 80px;
+      right: -100%;
+      width: 250px;
+      height: calc(100vh - 80px);
+      background: #f6ddda;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 20px;
+      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+      transition: right 0.3s ease;
+    }
+
+    .navbar-menu.active {
+      right: 0;
+    }
+
+    .navbar-menu .button-white,
+    .navbar-menu .button-green,
+    .navbar-menu .button-orange {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+      display: block;
+    }
+  }
+</style>

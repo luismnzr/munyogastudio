@@ -414,11 +414,12 @@ footer {
   align-items: center;
   justify-content: center;
   text-align: center;
+  flex-direction: column;
 }
 
 .calendarGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 20px;
   padding: 2rem;
   &-column {
@@ -431,7 +432,10 @@ footer {
     background: #fbeeed;
     padding: 2rem 1rem;
     border-radius: 30px;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    .button-green {
+      width: 100%;
+    }
   }
   &-class {
     font-size: 1.125rem;

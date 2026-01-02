@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :admin do
       resources :users
+      resources :class_sessions
 
       root to: "users#index"
     end
@@ -10,6 +11,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root to: 'pages#home'
   get 'calendario', to: 'pages#calendario'
+
+  resources :reservations, only: [:index, :create, :destroy]
+
   get 'payments/new'
   post 'payments/create', to: 'payments#create', as: 'payments_create'
   post 'payments/recurring', to: 'payments#recurring', as: 'payments_recurring'

@@ -1,0 +1,46 @@
+<h1><%= @class_session.class_type %></h1>
+
+<div style="background: #fbeeed; padding: 20px; border-radius: 10px; margin: 20px 0;">
+  <p><strong>Date:</strong> <%= @class_session.date.strftime('%A, %B %d, %Y') %></p>
+  <p><strong>Time:</strong> <%= @class_session.start_time.strftime('%I:%M %p') %> - <%= @class_session.end_time.strftime('%I:%M %p') %></p>
+  <p><strong>Instructor:</strong> <%= @class_session.instructor_name || 'Not assigned' %></p>
+  <p><strong>Capacity:</strong> <%= @class_session.capacity %></p>
+  <p><strong>Reserved:</strong> <%= @class_session.reservations.where(status: 'confirmed').count %></p>
+  <p><strong>Available:</strong> <%= @class_session.available_spots %></p>
+  <% if @class_session.description.present? %>
+    <p><strong>Description:</strong> <%= @class_session.description %></p>
+  <% end %>
+</div>
+
+<div style="margin: 20px 0;">
+  <%= link_to 'Edit', edit_admin_class_session_path(@class_session), class: 'button-orange', style: 'display: inline-block; margin-right: 10px;' %>
+  <%= link_to 'Delete', admin_class_session_path(@class_session), method: :delete, data: { confirm: 'Are you sure?' }, class: 'button-white', style: 'display: inline-block; margin-right: 10px; background: #dc3545; color: white;' %>
+  <%= link_to 'Back', admin_class_sessions_path, class: 'button-white', style: 'display: inline-block;' %>
+</div>
+
+<h2 style="margin-top: 40px;">Reservations (<%= @reservations.count %>)</h2>
+
+<% if @reservations.any? %>
+  <table style="width:100%; border-collapse: collapse; margin-top: 20px;">
+    <thead style="background: #253938; color: white;">
+      <tr>
+        <th style="padding: 12px; border: 1px solid #ddd;">Student</th>
+        <th style="padding: 12px; border: 1px solid #ddd;">Email</th>
+        <th style="padding: 12px; border: 1px solid #ddd;">Status</th>
+        <th style="padding: 12px; border: 1px solid #ddd;">Booked At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reservations.each do |reservation| %>
+        <tr style="background: #fbeeed;">
+          <td style="padding: 10px; border: 1px solid #ddd;"><%= reservation.user.name || '-' %></td>
+          <td style="padding: 10px; border: 1px solid #ddd;"><%= reservation.user.email %></td>
+          <td style="padding: 10px; border: 1px solid #ddd;"><%= reservation.status.titleize %></td>
+          <td style="padding: 10px; border: 1px solid #ddd;"><%= reservation.created_at.strftime('%b %d, %I:%M %p') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p style="color: #666; margin-top: 20px;">No reservations yet.</p>
+<% end %>

@@ -19,6 +19,8 @@ class UserDashboard < Administrate::BaseDashboard
     reset_password_sent_at: Field::DateTime,
     reset_password_token: Field::String,
     yogaclass: Field::Number,
+    reservations: Field::HasMany,
+    class_sessions: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -40,15 +42,12 @@ class UserDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     id
     email
-    encrypted_password
-    enddate
     name
     admin
-    stripe_id
-    remember_created_at
-    reset_password_sent_at
-    reset_password_token
     yogaclass
+    enddate
+    stripe_id
+    reservations
     created_at
     updated_at
   ].freeze

@@ -16,9 +16,19 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% unless devise_controller? || controller_name == 'sessions' || controller_name == 'registrations' %>
+      <%= render 'shared/navbar' %>
+    <% end %>
+
+    <% if notice.present? %>
+      <p class="notice notification"><%= notice %></p>
+    <% end %>
+    <% if alert.present? %>
+      <p class="alert notification"><%= alert %></p>
+    <% end %>
+
     <%= yield %>
+
     <footer>
       <%= image_tag("star.svg") %>
     </footer>
