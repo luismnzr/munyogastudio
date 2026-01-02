@@ -66,16 +66,6 @@
                 <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
             <% end %>
         </div>
-        <div class="containerPrices-item">
-            <h2>Ilimitado + nutrición</h2>
-            <br>
-            <p>$2,600</p>
-            <br>
-            <% if user_signed_in? %>
-                <%= button_to 'Comprar Plan', payments_create_path(plan_id: 'price_1R1FyTBLJNSq80FfFRhTtDWV'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
-            <% else %>
-                <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
-            <% end %>
-        </div>
+
     </div>
 </div>

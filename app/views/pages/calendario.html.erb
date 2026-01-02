@@ -38,18 +38,18 @@
                 <p style="font-size: 14px;"><%= session.instructor_name %></p>
               <% end %>
 
-              <p style="font-size: 12px; margin: 10px 0; color: <%= session.available_spots > 0 ? '#28a745' : '#dc3545' %>;">
+              <p style="font-size: 12px; margin: 10px 0; color: <%= session.available_spots > 0 ? '#111' : '#dc3545' %>;">
                 <%= session.available_spots %> / <%= session.capacity %> espacios
               </p>
 
               <% if current_user %>
                 <% user_reservation = current_user.reservations.confirmed.find_by(class_session_id: session.id) %>
                 <% if user_reservation %>
-                  <p style="background: #28a745; color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">✓ Reservada</p>
+                  <p class="button-white">✓ Reservada</p>
                 <% elsif session.full? %>
                   <p style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Lleno</p>
                 <% elsif current_user.yogaclass > 0 %>
-                  <%= button_to 'Reservar', reservations_path(class_session_id: session.id), method: :post, style: 'background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; width: 100%; margin-top: 5px;' %>
+                  <%= button_to 'Reservar', reservations_path(class_session_id: session.id), method: :post, class: 'button-green' %>
                 <% else %>
                   <p style="background: #ffc107; color: #000; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Sin clases</p>
                 <% end %>
