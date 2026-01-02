@@ -13,7 +13,7 @@
 
   <div style="margin-bottom: 15px;">
     <%= f.label :class_type, style: 'display: block; margin-bottom: 5px; font-weight: bold;' %>
-    <%= f.select :class_type, ['Vinyasa flow', 'Slow flow', 'Slow Vinyasa', 'Ashtanga', 'Restaurativo'], {}, { required: true, style: 'padding: 10px; width: 100%; max-width: 400px;' } %>
+    <%= f.select :class_type, ['Vinyasa Flow', 'Slow Flow', 'Power Vinyasa', 'Ashtanga Led', 'Restaurativo', 'Yang to Yin', 'Drills', 'Evento'], { prompt: 'Estilo de clase' }, { required: true, style: 'padding: 10px; width: 100%; max-width: 400px;' } %>
   </div>
 
   <div style="margin-bottom: 15px;">
@@ -33,7 +33,7 @@
 
   <div style="margin-bottom: 15px;">
     <%= f.label :instructor_name, style: 'display: block; margin-bottom: 5px; font-weight: bold;' %>
-    <%= f.text_field :instructor_name, placeholder: 'e.g., Luis, Paola Arzola', style: 'padding: 10px; width: 100%; max-width: 400px;' %>
+    <%= f.select :instructor_name, ['Ana Rovira', 'Luis Manzur', 'Elissa Dávila', 'Leo González', 'Mariana Blando', 'Tania Rodríguez', 'Paola Arzola', 'Ana Paula Romero', 'TBD'], { prompt: 'Selecciona Maestrx' }, { required: true, style: 'padding: 10px; width: 100%; max-width: 400px;' } %>
   </div>
 
   <div style="margin-bottom: 15px;">
