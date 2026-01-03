@@ -32,7 +32,8 @@
     const menu = document.getElementById('navbarMenu');
 
     if (toggle && menu) {
-      toggle.addEventListener('click', function() {
+      toggle.addEventListener('click', function(event) {
+        event.stopPropagation();
         menu.classList.toggle('active');
         toggle.classList.toggle('active');
       });
