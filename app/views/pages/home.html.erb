@@ -26,6 +26,13 @@
     width: 100%;
     padding: 20px 0;
     z-index: 100;
+    transition: background-color 0.3s ease, position 0.1s ease;
+  }
+
+  .navbar-home.scrolled {
+    position: fixed;
+    background-color: #f6ddda;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
 
   .navbar-home-container {
@@ -63,6 +70,13 @@
     white-space: nowrap;
   }
 
+  #heroLogo {
+    position: fixed;
+    z-index: 101;
+    transition: none;
+    will-change: transform, width;
+  }
+
   @media screen and (max-width: 749px) {
     .navbar-home-container {
       padding: 0 1rem;
@@ -87,8 +101,119 @@
       padding: 0.5rem 1rem;
       font-size: 14px;
     }
+
+    #heroLogo {
+      /* Disable animation on mobile */
+      position: static !important;
+      transform: none !important;
+      width: auto !important;
+    }
+
+    .navbar-home.scrolled {
+      background-color: #f6ddda;
+    }
   }
 </style>
+
+<script>
+  (function() {
+    let animationInitialized = false;
+
+    function initLogoAnimation() {
+      if (animationInitialized) return;
+
+      const logo = document.getElementById('heroLogo');
+      const navbar = document.querySelector('.navbar-home');
+      const navbarTarget = document.getElementById('navbarLogoTarget');
+      const hero = document.querySelector('.home_hero');
+
+      if (!logo || !navbar || !navbarTarget || !hero) return;
+
+      // Skip animation on mobile
+      if (window.innerWidth <= 749) return;
+
+      animationInitialized = true;
+
+      // Get initial positions
+      const heroRect = hero.getBoundingClientRect();
+      const initialLogoWidth = logo.offsetWidth;
+      const finalLogoWidth = 120;
+
+      // Calculate initial position (center of hero)
+      const initialTop = heroRect.top + (heroRect.height / 2) - (logo.offsetHeight / 2);
+      const initialLeft = heroRect.left + (heroRect.width / 2) - (logo.offsetWidth / 2);
+
+      // Set initial fixed position
+      logo.style.top = initialTop + 'px';
+      logo.style.left = initialLeft + 'px';
+      logo.style.width = initialLogoWidth + 'px';
+
+      // Scroll distance for complete animation (adjust this for speed)
+      const scrollDistance = 400;
+
+      function handleScroll() {
+        const scrollY = window.scrollY;
+        const progress = Math.min(scrollY / scrollDistance, 1);
+
+        // Get target position (navbar center)
+        const navbarTargetRect = navbarTarget.getBoundingClientRect();
+        const targetTop = navbarTargetRect.top + (navbarTargetRect.height / 2) - (finalLogoWidth / 2 * (logo.offsetHeight / logo.offsetWidth));
+        const targetLeft = navbarTargetRect.left + (navbarTargetRect.width / 2) - (finalLogoWidth / 2);
+
+        // Calculate current position and size
+        const currentTop = initialTop + (targetTop - initialTop) * progress;
+        const currentLeft = initialLeft + (targetLeft - initialLeft) * progress;
+        const currentWidth = initialLogoWidth + (finalLogoWidth - initialLogoWidth) * progress;
+
+        // Apply transform
+        logo.style.top = currentTop + 'px';
+        logo.style.left = currentLeft + 'px';
+        logo.style.width = currentWidth + 'px';
+
+        // Toggle navbar scrolled state
+        if (progress >= 0.8) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      }
+
+      // Throttle scroll event for performance
+      let ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            handleScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      // Initial call
+      handleScroll();
+
+      // Recalculate on resize
+      let resizeTimeout;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+          if (window.innerWidth > 749) {
+            const heroRect = hero.getBoundingClientRect();
+            const scrollY = window.scrollY;
+            handleScroll();
+          }
+        }, 250);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLogoAnimation);
+    } else {
+      initLogoAnimation();
+    }
+  })();
+</script>
 
 <div class="container">
     <div class="home_textBanner">
