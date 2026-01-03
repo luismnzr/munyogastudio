@@ -134,38 +134,41 @@
 
       animationInitialized = true;
 
-      // Get initial positions
+      // Get initial measurements
       const heroRect = hero.getBoundingClientRect();
+      const navbarTargetRect = navbarTarget.getBoundingClientRect();
       const initialLogoWidth = logo.offsetWidth;
       const finalLogoWidth = 120;
 
-      // Calculate initial position (center of hero)
-      const initialTop = heroRect.top + (heroRect.height / 2) - (logo.offsetHeight / 2);
+      // Calculate initial position (center of hero) in page coordinates
+      const initialTop = heroRect.top + window.scrollY + (heroRect.height / 2) - (logo.offsetHeight / 2);
       const initialLeft = heroRect.left + (heroRect.width / 2) - (logo.offsetWidth / 2);
 
+      // Calculate final position (navbar center when fixed at top) in viewport coordinates
+      // When navbar is fixed, it will be at top: 0, so we calculate based on that
+      const navbarHeight = 80; // navbar height with padding
+      const finalTop = 20 + (navbarHeight / 2) - (finalLogoWidth / 2 * (logo.offsetHeight / logo.offsetWidth));
+      const finalLeft = navbarTargetRect.left + (navbarTargetRect.width / 2) - (finalLogoWidth / 2);
+
       // Set initial fixed position
-      logo.style.top = initialTop + 'px';
+      logo.style.top = (initialTop - window.scrollY) + 'px';
       logo.style.left = initialLeft + 'px';
       logo.style.width = initialLogoWidth + 'px';
 
-      // Scroll distance for complete animation (adjust this for speed)
+      // Scroll distance for complete animation
       const scrollDistance = 400;
 
       function handleScroll() {
         const scrollY = window.scrollY;
         const progress = Math.min(scrollY / scrollDistance, 1);
 
-        // Get target position (navbar center)
-        const navbarTargetRect = navbarTarget.getBoundingClientRect();
-        const targetTop = navbarTargetRect.top + (navbarTargetRect.height / 2) - (finalLogoWidth / 2 * (logo.offsetHeight / logo.offsetWidth));
-        const targetLeft = navbarTargetRect.left + (navbarTargetRect.width / 2) - (finalLogoWidth / 2);
-
-        // Calculate current position and size
-        const currentTop = initialTop + (targetTop - initialTop) * progress;
-        const currentLeft = initialLeft + (targetLeft - initialLeft) * progress;
+        // Calculate current position
+        // For top: interpolate from initial (page coords - scroll) to final (fixed viewport coords)
+        const currentTop = (initialTop - scrollY) + ((finalTop - (initialTop - scrollY)) * progress);
+        const currentLeft = initialLeft + (finalLeft - initialLeft) * progress;
         const currentWidth = initialLogoWidth + (finalLogoWidth - initialLogoWidth) * progress;
 
-        // Apply transform
+        // Apply styles
         logo.style.top = currentTop + 'px';
         logo.style.left = currentLeft + 'px';
         logo.style.width = currentWidth + 'px';
@@ -199,9 +202,7 @@
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(function() {
           if (window.innerWidth > 749) {
-            const heroRect = hero.getBoundingClientRect();
-            const scrollY = window.scrollY;
-            handleScroll();
+            location.reload(); // Simple solution: reload on resize to recalculate everything
           }
         }, 250);
       });
