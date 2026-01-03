@@ -3,13 +3,21 @@
     <div class="navbar-home-left"></div>
     <div class="navbar-home-center" id="navbarLogoTarget"></div>
     <div class="navbar-home-right">
-      <%= link_to 'Clases', payments_new_path, class: 'button-white' %>
-      <% if current_user %>
-        <%= link_to "Calendario", calendario_path, class: 'button-white' %>
-        <%= link_to "Mi Cuenta", edit_user_registration_path, class: 'button-orange' %>
-      <% else %>
-        <%= link_to 'Iniciar sesión', new_user_session_path, class: 'button-green' %>
-      <% end %>
+      <button class="navbar-home-toggle" id="navbarHomeToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="navbar-home-menu" id="navbarHomeMenu">
+        <%= link_to 'Clases', payments_new_path, class: 'button-white' %>
+        <% if current_user %>
+          <%= link_to "Calendario", calendario_path, class: 'button-white' %>
+          <%= link_to "Mi Cuenta", edit_user_registration_path, class: 'button-orange' %>
+        <% else %>
+          <%= link_to 'Iniciar sesión', new_user_session_path, class: 'button-green' %>
+        <% end %>
+      </div>
     </div>
   </div>
 </nav>
@@ -42,6 +50,7 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    height: 80px;
   }
 
   .navbar-home-left {
@@ -62,9 +71,50 @@
     justify-content: flex-end;
   }
 
-  .navbar-home-right .button-white,
-  .navbar-home-right .button-green,
-  .navbar-home-right .button-orange {
+  .navbar-home-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 101;
+  }
+
+  .navbar-home-toggle span {
+    width: 25px;
+    height: 3px;
+    background: #253938;
+    margin: 3px 0;
+    transition: all 0.3s ease;
+    border-radius: 3px;
+  }
+
+  .navbar-home.scrolled .navbar-home-toggle span {
+    background: #253938;
+  }
+
+  .navbar-home-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+  }
+
+  .navbar-home-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .navbar-home-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+
+  .navbar-home-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .navbar-home-menu .button-white,
+  .navbar-home-menu .button-green,
+  .navbar-home-menu .button-orange {
     padding: 0.75rem 1.5rem;
     width: auto;
     white-space: nowrap;
@@ -80,33 +130,61 @@
   @media screen and (max-width: 749px) {
     .navbar-home-container {
       padding: 0 1rem;
-      grid-template-columns: 1fr;
+      grid-template-columns: auto 1fr;
       justify-items: flex-end;
     }
 
-    .navbar-home-left,
-    .navbar-home-center {
+    .navbar-home-left {
       display: none;
     }
 
-    .navbar-home-right {
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 10px;
+    .navbar-home-center {
+      grid-column: 1;
+      justify-self: start;
     }
 
-    .navbar-home-right .button-white,
-    .navbar-home-right .button-green,
-    .navbar-home-right .button-orange {
-      padding: 0.5rem 1rem;
-      font-size: 14px;
+    .navbar-home-right {
+      grid-column: 2;
+      justify-self: end;
+    }
+
+    .navbar-home-toggle {
+      display: flex;
+    }
+
+    .navbar-home-menu {
+      position: fixed;
+      top: 80px;
+      right: -100%;
+      width: 250px;
+      height: calc(100vh - 80px);
+      background: #f6ddda;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 20px;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease;
+    }
+
+    .navbar-home-menu.active {
+      right: 0;
+    }
+
+    .navbar-home-menu .button-white,
+    .navbar-home-menu .button-green,
+    .navbar-home-menu .button-orange {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+      display: block;
+      padding: 0.75rem 1.5rem;
     }
 
     #heroLogo {
-      /* Disable animation on mobile */
-      position: static !important;
-      transform: none !important;
-      width: auto !important;
+      /* Keep logo visible and smaller on mobile */
+      position: fixed !important;
+      z-index: 102 !important;
     }
 
     .navbar-home.scrolled {
@@ -118,7 +196,44 @@
 <script>
   (function() {
     let animationInitialized = false;
+    let hamburgerInitialized = false;
 
+    // Initialize hamburger menu
+    function initHamburgerMenu() {
+      if (hamburgerInitialized) return;
+
+      const toggle = document.getElementById('navbarHomeToggle');
+      const menu = document.getElementById('navbarHomeMenu');
+
+      if (toggle && menu) {
+        hamburgerInitialized = true;
+
+        toggle.addEventListener('click', function(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          menu.classList.toggle('active');
+          toggle.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+          if (!toggle.contains(event.target) && !menu.contains(event.target)) {
+            menu.classList.remove('active');
+            toggle.classList.remove('active');
+          }
+        });
+
+        // Close menu when clicking a link inside
+        menu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            menu.classList.remove('active');
+            toggle.classList.remove('active');
+          });
+        });
+      }
+    }
+
+    // Initialize logo animation
     function initLogoAnimation() {
       if (animationInitialized) return;
 
@@ -129,24 +244,76 @@
 
       if (!logo || !navbar || !navbarTarget || !hero) return;
 
-      // Skip animation on mobile
-      if (window.innerWidth <= 749) return;
+      // On mobile, use simpler animation
+      if (window.innerWidth <= 749) {
+        animationInitialized = true;
+
+        // Get initial measurements for mobile
+        const heroRect = hero.getBoundingClientRect();
+        const initialLogoWidth = logo.offsetWidth;
+        const finalLogoWidth = 60; // Smaller on mobile
+
+        const initialTop = heroRect.top + window.scrollY + (heroRect.height / 2) - (logo.offsetHeight / 2);
+        const initialLeft = heroRect.left + (heroRect.width / 2) - (logo.offsetWidth / 2);
+
+        // Final position on mobile (left side of navbar)
+        const finalTop = 10;
+        const finalLeft = 10;
+
+        logo.style.top = (initialTop - window.scrollY) + 'px';
+        logo.style.left = initialLeft + 'px';
+        logo.style.width = initialLogoWidth + 'px';
+
+        const scrollDistance = 300;
+
+        function handleScrollMobile() {
+          const scrollY = window.scrollY;
+          const progress = Math.min(scrollY / scrollDistance, 1);
+
+          const currentTop = (initialTop - scrollY) + ((finalTop - (initialTop - scrollY)) * progress);
+          const currentLeft = initialLeft + (finalLeft - initialLeft) * progress;
+          const currentWidth = initialLogoWidth + (finalLogoWidth - initialLogoWidth) * progress;
+
+          logo.style.top = currentTop + 'px';
+          logo.style.left = currentLeft + 'px';
+          logo.style.width = currentWidth + 'px';
+
+          if (progress >= 0.8) {
+            navbar.classList.add('scrolled');
+          } else {
+            navbar.classList.remove('scrolled');
+          }
+        }
+
+        let ticking = false;
+        window.addEventListener('scroll', function() {
+          if (!ticking) {
+            window.requestAnimationFrame(function() {
+              handleScrollMobile();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+
+        handleScrollMobile();
+        return;
+      }
 
       animationInitialized = true;
 
-      // Get initial measurements
+      // Get initial measurements for desktop
       const heroRect = hero.getBoundingClientRect();
       const navbarTargetRect = navbarTarget.getBoundingClientRect();
       const initialLogoWidth = logo.offsetWidth;
-      const finalLogoWidth = 120;
+      const finalLogoWidth = 80;
 
       // Calculate initial position (center of hero) in page coordinates
       const initialTop = heroRect.top + window.scrollY + (heroRect.height / 2) - (logo.offsetHeight / 2);
       const initialLeft = heroRect.left + (heroRect.width / 2) - (logo.offsetWidth / 2);
 
       // Calculate final position (navbar center when fixed at top) in viewport coordinates
-      // When navbar is fixed, it will be at top: 0, so we calculate based on that
-      const navbarHeight = 80; // navbar height with padding
+      const navbarHeight = 80;
       const finalTop = 20 + (navbarHeight / 2) - (finalLogoWidth / 2 * (logo.offsetHeight / logo.offsetWidth));
       const finalLeft = navbarTargetRect.left + (navbarTargetRect.width / 2) - (finalLogoWidth / 2);
 
@@ -163,7 +330,6 @@
         const progress = Math.min(scrollY / scrollDistance, 1);
 
         // Calculate current position
-        // For top: interpolate from initial (page coords - scroll) to final (fixed viewport coords)
         const currentTop = (initialTop - scrollY) + ((finalTop - (initialTop - scrollY)) * progress);
         const currentLeft = initialLeft + (finalLeft - initialLeft) * progress;
         const currentWidth = initialLogoWidth + (finalLogoWidth - initialLogoWidth) * progress;
@@ -202,15 +368,19 @@
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(function() {
           if (window.innerWidth > 749) {
-            location.reload(); // Simple solution: reload on resize to recalculate everything
+            location.reload();
           }
         }, 250);
       });
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initLogoAnimation);
+      document.addEventListener('DOMContentLoaded', function() {
+        initHamburgerMenu();
+        initLogoAnimation();
+      });
     } else {
+      initHamburgerMenu();
       initLogoAnimation();
     }
   })();
