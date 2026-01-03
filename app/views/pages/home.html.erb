@@ -44,6 +44,7 @@
   }
 
   .navbar-home-container {
+    width: 100%;
     max-width: 1320px;
     margin: 0 auto;
     padding: 0 2rem;
@@ -251,7 +252,7 @@
         // Get initial measurements for mobile
         const heroRect = hero.getBoundingClientRect();
         const initialLogoWidth = logo.offsetWidth;
-        const finalLogoWidth = initialLogoWidth; // Keep same size on mobile
+        const finalLogoWidth = 120; // Same as desktop
 
         const initialTop = heroRect.top + window.scrollY + (heroRect.height / 2) - (logo.offsetHeight / 2);
         const initialLeft = heroRect.left + (heroRect.width / 2) - (logo.offsetWidth / 2);
