@@ -258,7 +258,7 @@
         const initialLeft = heroRect.left + (heroRect.width / 2) - (logo.offsetWidth / 2);
 
         // Final position on mobile (left side of navbar, 20px lower)
-        const finalTop = 30;
+        const finalTop = 20;
         const finalLeft = 10;
 
         logo.style.top = (initialTop - window.scrollY) + 'px';
@@ -315,7 +315,7 @@
 
       // Calculate final position (navbar center when fixed at top) in viewport coordinates
       const navbarHeight = 80;
-      const finalTop = 20 + (navbarHeight / 2) - (finalLogoWidth / 2 * (logo.offsetHeight / logo.offsetWidth));
+      const finalTop = 0 + (navbarHeight / 2) - (finalLogoWidth / 2 * (logo.offsetHeight / logo.offsetWidth));
       const finalLeft = navbarTargetRect.left + (navbarTargetRect.width / 2) - (finalLogoWidth / 2);
 
       // Set initial fixed position
