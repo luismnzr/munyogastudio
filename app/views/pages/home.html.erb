@@ -251,13 +251,13 @@
         // Get initial measurements for mobile
         const heroRect = hero.getBoundingClientRect();
         const initialLogoWidth = logo.offsetWidth;
-        const finalLogoWidth = 60; // Smaller on mobile
+        const finalLogoWidth = initialLogoWidth; // Keep same size on mobile
 
         const initialTop = heroRect.top + window.scrollY + (heroRect.height / 2) - (logo.offsetHeight / 2);
         const initialLeft = heroRect.left + (heroRect.width / 2) - (logo.offsetWidth / 2);
 
-        // Final position on mobile (left side of navbar)
-        const finalTop = 10;
+        // Final position on mobile (left side of navbar, 20px lower)
+        const finalTop = 30;
         const finalLeft = 10;
 
         logo.style.top = (initialTop - window.scrollY) + 'px';
