@@ -11,7 +11,7 @@
             <p>$280</p>
             <br>
             <% if user_signed_in? %>
-                <%= button_to 'Comprar Clase', payments_create_path(plan_id: 'price_1QZZYoBLJNSq80FfONF7Ky7a'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Comprar Clase', payments_create_path(plan_id: Rails.configuration.stripe[:prices][:single]), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
                 <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
             <% end %>
@@ -22,7 +22,7 @@
             <p>$1,100</p>
             <br>
             <% if user_signed_in? %>
-                <%= button_to 'Comprar Clases', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80FfbnmUr55a'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Comprar Clases', payments_create_path(plan_id: Rails.configuration.stripe[:prices][:double]), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
                 <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
             <% end %>
@@ -33,9 +33,9 @@
             <p>$1,500</p>
             <br>
             <% if user_signed_in? %>
-                <%= button_to 'Comprar Clases', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80Ff9Z1B7esg'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Comprar Clases', payments_create_path(plan_id: Rails.configuration.stripe[:prices][:mid]), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
                 <br>
-                <%= button_to 'Pago Recurrente', payments_recurring_path(plan_id: 'price_1R1tZGBLJNSq80Ff7krJ3z7p'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Pago Recurrente', payments_recurring_path(plan_id: Rails.configuration.stripe[:recurring_prices][:mid]), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
                 <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
             <% end %>
@@ -46,9 +46,9 @@
             <p>$1,950</p>
             <br>
             <% if user_signed_in? %>
-                <%= button_to 'Comprar Clases', payments_create_path(plan_id: 'price_1Q17JCBLJNSq80Ff9gWMLUIn'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Comprar Clases', payments_create_path(plan_id: Rails.configuration.stripe[:prices][:full]), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
                 <br>
-                <%= button_to 'Pago Recurrente', payments_recurring_path(plan_id: 'price_1R1tZoBLJNSq80FfKCsxQnDe'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Pago Recurrente', payments_recurring_path(plan_id: Rails.configuration.stripe[:recurring_prices][:full]), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
                 <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
             <% end %>
@@ -59,9 +59,9 @@
             <p>$2,300</p>
             <br>
             <% if user_signed_in? %>
-                <%= button_to 'Comprar Clases', payments_create_path(plan_id: 'price_1R1FvZBLJNSq80FfCXbatnzQ'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Comprar Clases', payments_create_path(plan_id: Rails.configuration.stripe[:prices][:limitless]), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
                 <br>
-                <%= button_to 'Pago Recurrente', payments_recurring_path(plan_id: 'price_1R1taIBLJNSq80FfNUJxp5CV'), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
+                <%= button_to 'Pago Recurrente', payments_recurring_path(plan_id: Rails.configuration.stripe[:recurring_prices][:limitless]), method: :post, remote: true, data: { turbo: false }, class: 'button-orange' %>
             <% else %>
                 <%= link_to 'Inicia sesión para comprar', new_user_registration_path, class: 'button-orange' %>
             <% end %>
