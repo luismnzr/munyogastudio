@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar" style="background: #253938;">
   <div class="navbar-container">
     <div class="navbar-left">
       <%= link_to root_path, class: 'navbar-logo' do %>
@@ -8,9 +8,9 @@
 
     <div class="navbar-right">
       <button class="navbar-toggle" id="navbarToggle">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span style="background: white;"></span>
+        <span style="background: white;"></span>
+        <span style="background: white;"></span>
       </button>
 
       <div class="navbar-menu" id="navbarMenu">
@@ -78,7 +78,6 @@
     width: 100%;
     padding: 0;
     height: auto;
-    background: #f6ddda;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -129,7 +128,6 @@
   .navbar-toggle span {
     width: 25px;
     height: 3px;
-    background: #253938;
     margin: 3px 0;
     transition: all 0.3s ease;
     border-radius: 3px;
@@ -180,7 +178,7 @@
       right: -100%;
       width: 250px;
       height: calc(100vh - 80px);
-      background: #f6ddda;
+      background: #253938;
       flex-direction: column;
       align-items: stretch;
       gap: 0;
