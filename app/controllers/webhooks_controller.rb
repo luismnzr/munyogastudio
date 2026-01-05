@@ -32,42 +32,37 @@ class WebhooksController < ApplicationController
       @user.update(stripe_id: customer.id)
     when 'checkout.session.completed'
       session = event.data.object
-      single = 'price_1QZZYoBLJNSq80FfONF7Ky7a'
-      double = 'price_1Q17JCBLJNSq80FfbnmUr55a'
-      mid = 'price_1Q17JCBLJNSq80Ff9Z1B7esg'
-      full = 'price_1Q17JCBLJNSq80Ff9gWMLUIn'
-      limitless = 'price_1R1FvZBLJNSq80FfCXbatnzQ'
-      limitlessNutri = 'price_1R1FyTBLJNSq80FfFRhTtDWV'
+      prices = Rails.configuration.stripe[:prices]
 
       @user = User.find_by(stripe_id: session.customer)
       user_yogaclasses = @user.yogaclass
 
-      if session.metadata.key == single
+      if session.metadata.key == prices[:single]
         @user.update(
           yogaclass: user_yogaclasses + 1,
           enddate: Time.now + 30.days
         )
-      elsif session.metadata.key == double
+      elsif session.metadata.key == prices[:double]
         @user.update(
           yogaclass: user_yogaclasses + 4,
           enddate: Time.now + 30.days
         )
-      elsif session.metadata.key == mid
+      elsif session.metadata.key == prices[:mid]
         @user.update(
           yogaclass: user_yogaclasses + 8,
           enddate: Time.now + 30.days
         )
-      elsif session.metadata.key == full
+      elsif session.metadata.key == prices[:full]
         @user.update(
           yogaclass: user_yogaclasses + 12,
           enddate: Time.now + 30.days
         )
-      elsif session.metadata.key == limitless
+      elsif session.metadata.key == prices[:limitless]
         @user.update(
           yogaclass: user_yogaclasses + 99,
           enddate: Time.now + 30.days
         )
-      elsif session.metadata.key == limitlessNutri
+      elsif session.metadata.key == prices[:limitless_nutri]
         @user.update(
           yogaclass: user_yogaclasses + 99,
           enddate: Time.now + 30.days
@@ -77,25 +72,23 @@ class WebhooksController < ApplicationController
       end
     when event.type == 'customer.subscription.updated', 'customer.subscription.created'
       session = event.data.object
-      mid = 'price_1R1tZGBLJNSq80Ff7krJ3z7p'
-      full = 'price_1R1tZoBLJNSq80FfKCsxQnDe'
-      limitless = 'price_1R1taIBLJNSq80FfNUJxp5CV'
+      recurring_prices = Rails.configuration.stripe[:recurring_prices]
       # debugger
 
       @user = User.find_by(stripe_id: session.customer)
       user_yogaclasses = @user.yogaclass
 
-      if session.metadata.key == mid
+      if session.metadata.key == recurring_prices[:mid]
         @user.update(
           yogaclass: user_yogaclasses + 8,
           enddate: Time.now + 30.days
         )
-      elsif session.metadata.key == full
+      elsif session.metadata.key == recurring_prices[:full]
         @user.update(
           yogaclass: user_yogaclasses + 12,
           enddate: Time.now + 30.days
         )
-      elsif session.metadata.key == full
+      elsif session.metadata.key == recurring_prices[:limitless]
         @user.update(
           yogaclass: user_yogaclasses + 99,
           enddate: Time.now + 30.days
