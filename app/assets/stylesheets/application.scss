@@ -80,6 +80,19 @@ h2 {
   }
 }
 
+.button-disabled {
+  background: #8d9796;
+  border: none;
+  border-radius: 30px;
+  color: #fff !important;
+
+  display: block;
+  font-size: 1rem;
+  font-family: "Nunito Sans", sans-serif;
+  padding: 1rem 2.5rem;
+  transition: all 0.25s ease;
+}
+
 .button-orange {
   background: #ee7756;
   border: none;

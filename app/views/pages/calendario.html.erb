@@ -46,18 +46,26 @@
               </p>
 
               <% if current_user %>
+                <% is_past = session.datetime && session.datetime < Time.current %>
                 <% user_reservation = current_user.reservations.confirmed.find_by(class_session_id: session.id) %>
-                <% if user_reservation %>
+                <% if is_past %>
+                  <p class="button-disabled" style="padding: .5rem;">Finalizada</p>
+                <% elsif user_reservation %>
                   <p class="button-white" style="padding: .5rem;">✓ Reservada</p>
                 <% elsif session.full? %>
-                  <p style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Lleno</p>
+                  <p  class="button-disabled" style="padding: .5rem;">Clase llena</p>
                 <% elsif current_user.yogaclass > 0 %>
-                  <%= button_to 'Reservar', reservations_path(class_session_id: session.id), method: :post, class: 'button-green' %>
+                  <%= button_to 'Reservar', reservations_path(class_session_id: session.id), method: :post, class: 'button-green', style: "padding: .5rem;" %>
                 <% else %>
                   <p style="background: #ffc107; color: #000; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Sin clases</p>
                 <% end %>
               <% else %>
-                <%= link_to 'Iniciar sesión', new_user_session_path, style: 'color: #007bff; font-size: 12px;' %>
+                <% is_past = session.datetime && session.datetime < Time.current %>
+                <% if is_past %>
+                  <p class="button-disabled" style="padding: .5rem;">Finalizada</p>
+                <% else %>
+                  <%= link_to 'Iniciar sesión', new_user_session_path, style: 'color: #007bff; font-size: 12px;' %>
+                <% end %>
               <% end %>
             </div>
           <% end %>

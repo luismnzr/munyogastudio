@@ -24,6 +24,8 @@
           <% if reservation.can_cancel? %>
             <%= button_to 'Cancelar Reserva', reservation_path(reservation), method: :delete, data: { confirm: '¿Estás seguro? Tu clase será devuelta.' }, style: 'background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; margin-top: 10px;' %>
             <p style="font-size: 12px; color: #666; margin-top: 5px;">Puedes cancelar hasta 8 horas antes de la clase</p>
+          <% elsif reservation.finished? %>
+            <p style="background: #e9ecef; padding: 10px; border-radius: 5px; margin-top: 10px; font-size: 14px;">✓ Clase finalizada</p>
           <% else %>
             <p style="background: #fff3cd; padding: 10px; border-radius: 5px; margin-top: 10px; font-size: 14px;">⚠️ No se puede cancelar - faltan menos de 8 horas</p>
           <% end %>
@@ -32,6 +34,26 @@
     <% else %>
       <p style="color: #666; margin: 20px 0;">No tienes reservas próximas.</p>
       <%= link_to 'Ver Calendario', calendario_path, class: 'button-green', style: 'display: inline-block;' %>
+    <% end %>
+
+    <h2 style="margin-top: 40px; color: #fff;">Clases Pasadas</h2>
+
+    <% if @past_reservations.any? %>
+      <% @past_reservations.each do |reservation| %>
+        <% session = reservation.class_session %>
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0; opacity: 0.8;">
+          <h3 style="margin-top: 0; color: #6c757d;"><%= session.class_type %></h3>
+          <p style="color: #6c757d;"><strong><%= l(session.date, format: :long) %></strong></p>
+          <p style="color: #6c757d;"><%= l(session.start_time, format: :time_only) %> - <%= l(session.end_time, format: :time_only) %></p>
+          <% if session.instructor_name.present? %>
+            <p style="color: #6c757d;"><%= session.instructor_name %></p>
+          <% end %>
+          <p style="font-size: 14px; color: #999;">Reservada el <%= l(reservation.created_at.to_date, format: :default) %></p>
+          <p style="background: #e9ecef; padding: 10px; border-radius: 5px; margin-top: 10px; font-size: 14px; color: #6c757d;">✓ Clase finalizada</p>
+        </div>
+      <% end %>
+    <% else %>
+      <p style="color: #999; margin: 20px 0;">No tienes clases pasadas.</p>
     <% end %>
   </div>
 </div>
