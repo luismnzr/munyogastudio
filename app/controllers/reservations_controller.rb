@@ -7,6 +7,12 @@ class ReservationsController < ApplicationController
 
   def create
     @class_session = ClassSession.find(params[:class_session_id])
+
+    if @class_session.datetime && @class_session.datetime < Time.current
+      redirect_to calendario_path, alert: 'Cannot book a class that has already started'
+      return
+    end
+
     @reservation = current_user.reservations.build(class_session: @class_session, status: 'confirmed')
 
     if @reservation.save
