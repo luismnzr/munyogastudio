@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_01_000002) do
+ActiveRecord::Schema[7.0].define(version: 2026_01_06_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,7 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_01_000002) do
     t.datetime "updated_at", null: false
     t.index ["class_session_id", "status"], name: "index_reservations_on_class_session_id_and_status"
     t.index ["class_session_id"], name: "index_reservations_on_class_session_id"
-    t.index ["user_id", "class_session_id"], name: "index_reservations_on_user_id_and_class_session_id", unique: true
+    t.index ["user_id", "class_session_id"], name: "index_reservations_on_user_and_session_when_confirmed", unique: true, where: "((status)::text = 'confirmed'::text)"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
