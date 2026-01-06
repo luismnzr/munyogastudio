@@ -8,7 +8,7 @@ class Reservation < ApplicationRecord
   validate :class_not_full, on: :create
 
   scope :confirmed, -> { where(status: 'confirmed') }
-  scope :upcoming, -> { joins(:class_session).where('class_sessions.date >= ?', Date.today) }
+  scope :upcoming, -> { joins(:class_session).where('class_sessions.date >= ?', Date.today).order('class_sessions.date ASC, class_sessions.start_time ASC') }
 
   def can_cancel?
     return false unless status == 'confirmed'

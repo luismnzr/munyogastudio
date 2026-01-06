@@ -23,7 +23,7 @@
     <% 7.times do |i| %>
       <% date = @start_of_week + i.days %>
       <% day_sessions = @sessions_by_date[date] || [] %>
-      <% is_today = date == Date.today %>
+      <% is_today = date == @today %>
 
       <div class="calendarGrid-column">
         <h3 style="<%= 'color: #ee7756;' if is_today %>"><%= l(date, format: '%A') %></h3>
