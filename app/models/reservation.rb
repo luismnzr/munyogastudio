@@ -2,7 +2,7 @@ class Reservation < ApplicationRecord
   belongs_to :user
   belongs_to :class_session
 
-  validates :user_id, uniqueness: { scope: :class_session_id }
+  validates :user_id, uniqueness: { scope: :class_session_id, conditions: -> { where(status: 'confirmed') } }
   validates :status, presence: true, inclusion: { in: %w[confirmed cancelled] }
   validate :user_has_credits, on: :create
   validate :class_not_full, on: :create

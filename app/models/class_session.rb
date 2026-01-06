@@ -21,6 +21,8 @@ class ClassSession < ApplicationRecord
 
   def datetime
     return nil unless date && start_time
-    Time.zone.local(date.year, date.month, date.day, start_time.hour, start_time.min)
+    Time.use_zone('America/Monterrey') do
+      Time.zone.local(date.year, date.month, date.day, start_time.hour, start_time.min)
+    end
   end
 end
