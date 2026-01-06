@@ -14,9 +14,9 @@
       </button>
 
       <div class="navbar-menu" id="navbarMenu">
-        <%= link_to 'Clases', payments_new_path, class: 'button-white' %>
+        <%= link_to 'Planes', payments_new_path, class: 'button-white' %>
         <% if current_user %>
-          <%= link_to "Calendario", calendario_path, class: 'button-white' %>
+          <%= link_to "Reserva clase", calendario_path, class: 'button-white' %>
           <%= link_to "Mi Cuenta", edit_user_registration_path, class: 'button-orange' %>
         <% else %>
           <%= link_to 'Iniciar sesión', new_user_session_path, class: 'button-green' %>
@@ -202,85 +202,73 @@
   }
 </style>
 
-<div class="registrationContainer registrationContainer-alt">
-  <div class="registrationContainer-form">
-    <h2>Información de tu cuenta</h2>
-    <br>
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
+<div style="background: #253938;">
+  <div class="registrationContainer registrationContainer-alt">
+    <div  class="registrationContainer-form">
+      <h2>Tus clases en Mun</h2>
+      <br>
+      <p>Clases disponibles: <%= current_user.yogaclass %></p>
+      <p>Vigencia: <%= current_user.enddate ? l(current_user.enddate.to_date, format: :long) : 'N/A' %></p>
+      <br>
+      <%= link_to 'Reserva una clase', calendario_path, class: "button-white", style: "display: inline-block; margin-bottom: 20px;" %>
+      <br>
 
-      <div class="field">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input" %>
-      </div>
-
-      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% upcoming_reservations = current_user.reservations.confirmed.upcoming.includes(:class_session).limit(5) %>
+      <% if upcoming_reservations.any? %>
+        <h3 style="margin-top: 20px;">Próximas Clases Reservadas</h3>
+        <br>
+        <% upcoming_reservations.each do |reservation| %>
+          <% session = reservation.class_session %>
+          <div style="border-radius: 10px; margin-bottom: 15px;">
+            <p style="font-weight: bold; margin-bottom: 5px;"><%= session.class_type %></p>
+            <p style="font-size: 14px; margin-bottom: 3px;"><%= l(session.date, format: '%A, %d de %b') %></p>
+            <p style="font-size: 14px; margin-bottom: 3px;"><%= l(session.start_time, format: :time_only) %></p>
+            <% if session.instructor_name.present? %>
+              <p style="font-size: 14px;"><%= session.instructor_name %></p>
+            <% end %>
+          </div>
+        <% end %>
+        <%= link_to 'Ver todas mis reservas →', reservations_path, style: "color: #fff; font-size: 14px;" %>
+        <br><br>
       <% end %>
 
-      <div class="field">
-        <%= f.label :password %> <i>(deja en blanco si no quieres cambiarla)</i><br />
-        <%= f.password_field :password, autocomplete: "new-password", class: "input" %>
-        <% if @minimum_password_length %>
-          <br />
-          <em><%= @minimum_password_length %> caracteres mínimo</em>
-        <% end %>
-      </div>
-
-      <div class="field">
-        <%= f.label "Confirma nuevo password" %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input" %>
-      </div>
-
-      <div class="field">
-        <%= f.label "Password actual" %> <i>(para guardar cambios)</i><br />
-        <%= f.password_field :current_password, autocomplete: "current-password", class: "input" %>
-      </div>
-
-      <div class="actions">
-        <%= f.submit "Update", class: "button-orange" %>
-      </div>
-    <% end %>
-  </div>
-  <div  class="registrationContainer-form">
-    <h2>Tus clases en Mun</h2>
-    <br>
-    <p>Clases disponibles: <%= current_user.yogaclass %></p>
-    <p>Vigencia: <%= current_user.enddate ? l(current_user.enddate.to_date, format: :long) : 'N/A' %></p>
-    <br>
-    <%= link_to 'Ver Calendario', calendario_path, class: "button-white", style: "display: inline-block; margin-bottom: 20px;" %>
-    <br>
-
-    <% upcoming_reservations = current_user.reservations.confirmed.upcoming.includes(:class_session).limit(5) %>
-    <% if upcoming_reservations.any? %>
-      <h3 style="margin-top: 20px;">Próximas Clases Reservadas</h3>
+      <hr>
       <br>
-      <% upcoming_reservations.each do |reservation| %>
-        <% session = reservation.class_session %>
-        <div style="padding: 15px; border-radius: 10px; margin-bottom: 15px;">
-          <p style="font-weight: bold; margin-bottom: 5px;"><%= session.class_type %></p>
-          <p style="font-size: 14px; margin-bottom: 3px;">📅 <%= l(session.date, format: '%A, %d de %b') %></p>
-          <p style="font-size: 14px; margin-bottom: 3px;">🕐 <%= l(session.start_time, format: :time_only) %></p>
-          <% if session.instructor_name.present? %>
-            <p style="font-size: 14px;">👤 <%= session.instructor_name %></p>
-          <% end %>
+      <h2>Editar Membresía</h2>
+      <br>
+      <%= button_to 'Portal de pagos', billing_portal_create_path, data: { turbo: "false" }, class: "button-orange" %>
+      <br>
+      <hr>
+      <br>
+      <h2>Cerrar sesión</h2>
+      <br>
+      <%= link_to "Cerrar Sesión", destroy_user_session_path, data: { turbo_method: :delete }, class: "button-white" %>
+    </div>
+    <div class="registrationContainer-form">
+      <h2>Información de tu cuenta</h2>
+      <br>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+
+        <div class="field">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input" %>
+        </div>
+
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+        <% end %>
+
+        <div class="field">
+          <%= f.label "Password actual" %> <i>(para guardar cambios)</i><br />
+          <%= f.password_field :current_password, autocomplete: "current-password", class: "input" %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Actualizar correo", class: "button-orange" %>
         </div>
       <% end %>
-      <%= link_to 'Ver todas mis reservas →', reservations_path, style: "color: #007bff; font-size: 14px;" %>
-      <br><br>
-    <% end %>
-
-    <hr>
-    <br>
-    <h2>Editar Membresía</h2>
-    <br>
-    <%= button_to 'Portal de pagos', billing_portal_create_path, data: { turbo: "false" }, class: "button-orange" %>
-    <br>
-    <hr>
-    <br>
-    <h2>Cerrar sesión</h2>
-    <br>
-    <%= link_to "Cerrar Sesión", destroy_user_session_path, data: { turbo_method: :delete }, class: "button-white" %>
+    </div>
   </div>
 </div>
 

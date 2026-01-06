@@ -347,6 +347,8 @@ footer {
   color: #fff;
   &-alt {
     align-items: baseline;
+    max-width: 90%;
+    margin: auto;
   }
 
   &-cover {
@@ -406,15 +408,21 @@ footer {
 
 .calendarioCover {
   background: #253938;
-  color: #f7c6bf;
-  height: 333px;
-  margin: 2rem;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  flex-direction: column;
+  padding: 2rem;
+  &__box {
+    background: #f6ddda;
+    color: #111;
+    height: 333px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    max-width: 800px;
+  }
 }
 
 .calendarGrid {
