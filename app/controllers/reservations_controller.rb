@@ -2,7 +2,13 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @upcoming_reservations = current_user.reservations.confirmed.upcoming.includes(:class_session)
+    all_upcoming = current_user.reservations.confirmed.upcoming.includes(:class_session)
+    @upcoming_reservations = all_upcoming.reject(&:finished?)
+    @past_reservations = current_user.reservations.confirmed.past.includes(:class_session)
+
+    # Add finished classes from today to past reservations
+    finished_today = all_upcoming.select(&:finished?)
+    @past_reservations = (@past_reservations.to_a + finished_today).sort_by { |r| [r.class_session.date, r.class_session.start_time] }.reverse
   end
 
   def create
