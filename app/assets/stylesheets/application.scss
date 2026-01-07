@@ -471,3 +471,102 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+// PWA Mobile Enhancements
+@media screen and (max-width: 749px) {
+  // Improve touch targets for mobile (minimum 44x44px)
+  .button-green,
+  .button-white,
+  .button-orange,
+  .button-disabled {
+    min-height: 44px;
+    padding: 12px 24px;
+    font-size: 16px; // Prevents zoom on iOS
+  }
+
+  // Better spacing for notifications on mobile
+  .notification {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+    width: auto;
+  }
+
+  // Improve calendar item touch targets
+  .calendarGrid-item {
+    padding: 1.5rem 1rem;
+    margin-top: 15px;
+
+    p {
+      margin: 8px 0;
+    }
+
+    .button-green,
+    .button-white,
+    .button-disabled {
+      margin-top: 10px;
+      width: 100%;
+    }
+  }
+
+  // Better form inputs for mobile
+  .input {
+    font-size: 16px; // Prevents zoom on iOS
+    min-height: 44px;
+  }
+
+  // Improve navbar spacing
+  .navbar,
+  .navbar-home {
+    height: 60px;
+
+    .button-green,
+    .button-white,
+    .button-orange {
+      min-height: 40px;
+    }
+  }
+
+  // Better spacing in reservations view
+  .reservations-card {
+    margin: 15px 0;
+
+    button {
+      min-height: 44px;
+      font-size: 16px;
+    }
+  }
+}
+
+// Prevent tap highlight and improve touch experience
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  -webkit-touch-callout: none;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+}
+
+// Smooth scrolling for better mobile experience
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+// PWA specific styles when installed
+@media all and (display-mode: standalone) {
+  body {
+    // Add safe area insets for notched devices
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .navbar,
+  .navbar-home {
+    padding-top: calc(env(safe-area-inset-top) + 10px);
+  }
+}
